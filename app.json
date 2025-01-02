@@ -1,5 +1,6 @@
 {
   "expo": {
+    "main": "src/App.js",
     "name": "Naeng-front",
     "slug": "Naeng-front",
     "version": "1.0.0",
