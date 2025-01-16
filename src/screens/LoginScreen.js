@@ -32,7 +32,7 @@ export default function LoginScreen() {
                     <Text>Email:</Text>
                     <TextInput
                         style={styles.input}
-                        placeholder="Enter your email"
+                        placeholder="이메일을 입력하세요."
                         keyboardType="email-address"
                     />
                 </View>
@@ -40,7 +40,7 @@ export default function LoginScreen() {
                     <Text>Password:</Text>
                     <TextInput
                         style={styles.input}
-                        placeholder="Enter your password"
+                        placeholder="비밀번호를 입력하세요."
                         secureTextEntry
                     />
                 </View>
@@ -51,9 +51,9 @@ export default function LoginScreen() {
                 <Text style={styles.buttonText}>Go to Signup</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => navigation.navigate('SignUpBirthScreen', {screen: 'SignUpBirthScreen'})}
+            <TouchableOpacity onPress={() => navigation.navigate('MainScreen', {screen: 'MainScreen'})}
                 style={[styles.button, { marginTop: 10 }]}>
-                <Text style={styles.buttonText}>Go to Signup</Text>
+                <Text style={styles.buttonText}>Main(임시)</Text>
             </TouchableOpacity>
 
         </View>
