@@ -1,6 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
 import React, {useState} from "react";
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from "react-native";
+import { fonts } from "../utils/fontStyles";
+import CustomText from "../components/CustomText";
 
 export default function SignUpEmail() {
     const [BorderBottomColor, setBorderBottomColor] = useState('lightgray');    
@@ -10,16 +12,18 @@ export default function SignUpEmail() {
         return (
         <View
             style={styles.TextInptView}>
-                <Text
+                <CustomText
+                fontFamily={fonts.nRegular}
                 style={{
                     color: 'lightgray',
                     fontSize: 16,
                 }}>이름
-                </Text>
+                </CustomText>
                 <TextInput 
                 style={styles.TextInput}
                 value={Name}
-                placeholder="ex)홍길동"                               
+                placeholder="ex)홍길동"  
+                fontFamily={fonts.nBold}                             
                 onChangeText={(value) => {
                     setName(value)
                 }}
@@ -80,11 +84,10 @@ export default function SignUpEmail() {
                             display: 'flex',
                             justifyContent: 'flex-end'
                         }}>
-                        <Text
+                        <CustomText
                             style={{
                                 fontSize: 24,
-                                fontWeight: 'bold',
-                            }}>이름을 알려주세요</Text>
+                            }}>이름을 알려주세요</CustomText>
                     </View>
                     <View
                         style={{
@@ -110,14 +113,14 @@ export default function SignUpEmail() {
                                 alignItems: 'center',                                
                             }}
                             onPress={() => {
-                                navigation.navigate("SignUpBirth", {screen: "SignUpBirth"})
+                                navigation.navigate("SignUpBirthScreen", {screen: "SignUpBirthScreen"})
                             }}>
-                                <Text
+                                <CustomText
+                                fontFamily={fonts.nExtraBold}
                                 style={{
                                     color: 'white',
-                                    fontWeight: 'bold',
                                     fontSize: 16,
-                                }}>다음</Text>
+                                }}>다음</CustomText>
                             </TouchableOpacity>
                     </View>
                 </View>

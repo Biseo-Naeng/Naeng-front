@@ -9,6 +9,8 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import styles from "../styles/LoginStyle"
+import CustomText from "../components/CustomText";
+import { fonts } from "../utils/fontStyles";
 
 export default function LoginScreen() {
     const { width, height } = useWindowDimensions();
@@ -29,19 +31,21 @@ export default function LoginScreen() {
             </View>
             <View style={[styles.loginContainer, { padding: containerPadding }]}>
                 <View style={styles.inputGroup}>
-                    <Text>Email:</Text>
+                    <CustomText fontFamily={fonts.nBold}>Email:</CustomText>
                     <TextInput
                         style={styles.input}
                         placeholder="이메일을 입력하세요."
                         keyboardType="email-address"
+                        fontFamily={fonts.nBold}
                     />
                 </View>
                 <View style={styles.inputGroup}>
-                    <Text>Password:</Text>
+                <CustomText fontFamily={fonts.nBold}>Password:</CustomText>
                     <TextInput
                         style={styles.input}
                         placeholder="비밀번호를 입력하세요."
                         secureTextEntry
+                        fontFamily={fonts.nBold}
                     />
                 </View>
                 <Button title="Login" onPress={() => alert("Logged in")} />
