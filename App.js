@@ -15,10 +15,16 @@ import SignUpNickname from "./src/screens/SignUpNicknameScreen";
 import SignUpNumber from "./src/screens/SignUpNumberScreen";
 import SignUpPassword from "./src/screens/SignUpPasswordScreen";
 import SignUpProfile from "./src/screens/SignUpProfileScreen";
+import RecipeScreen from "./src/screens/RecipeScreen"; // 레시피 화면
+import FriendScreen from "./src/screens/FriendScreen"; // 친구 화면
+import MypageScreen from "./src/screens/MypageScreen"; // 마이페이지 화면
 
 import { fonts } from "./src/utils/fontStyles";
 
 const Stack = createStackNavigator();
+// 시작 화면 상수 정의
+
+const INITIAL_ROUTE_NAME = "LoginScreen";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -31,7 +37,6 @@ export default function App() {
     [fonts.nLight]: require("./src/assets/fonts/NanumSquareL.ttf"),
     [fonts.nRegular]: require("./src/assets/fonts/NanumSquareR.ttf"),
   });
-
 
   // Prevent splash screen from auto-hiding
   React.useEffect(() => {
@@ -48,59 +53,33 @@ export default function App() {
     return null; // Render nothing until fonts are loaded
   }
 
+  const screens = [
+    { name: "LoginScreen", component: LoginScreen },
+    { name: "SignUpNameScreen", component: SignUpName },
+    { name: "SignUpEmailScreen", component: SignUpEmail },
+    { name: "SignUpBirthScreen", component: SignUpBirth },
+    { name: "MainScreen", component: MainScreen },
+    { name: "SignUpGenderScreen", component: SignUpGender },
+    { name: "SignUpNicknameScreen", component: SignUpNickname },
+    { name: "SignUpNumberScreen", component: SignUpNumber },
+    { name: "SignUpPasswordScreen", component: SignUpPassword },
+    { name: "SignUpProfileScreen", component: SignUpProfile },
+    { name: "RecipeScreen", component: RecipeScreen },
+    { name: "FriendScreen", component: FriendScreen },
+    { name: "MypageScreen", component: MypageScreen },
+  ];
+
   return (
     <NavigationContainer onReady={onLayoutRootView}>
-      <Stack.Navigator initialRouteName="LoginScreen">
-        <Stack.Screen
-          name="LoginScreen"
-          component={LoginScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="SignUpNameScreen"
-          component={SignUpName}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="SignUpEmailScreen"
-          component={SignUpEmail}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="SignUpBirthScreen"
-          component={SignUpBirth}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="MainScreen"
-          component={MainScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="SignUpGenderScreen"
-          component={SignUpGender}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="SignUpNicknameScreen"
-          component={SignUpNickname}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="SignUpNumberScreen"
-          component={SignUpNumber}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="SignUpPasswordScreen"
-          component={SignUpPassword}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="SignUpProfileScreen"
-          component={SignUpProfile}
-          options={{ headerShown: false }}
-        />
+      <Stack.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
+        {screens.map(({ name, component }) => (
+          <Stack.Screen
+            key={name}
+            name={name}
+            component={component}
+            options={{ headerShown: false }}
+          />
+        ))}
       </Stack.Navigator>
     </NavigationContainer>
   );

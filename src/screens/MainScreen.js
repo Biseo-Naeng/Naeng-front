@@ -6,10 +6,12 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
-import "expo-router/entry"; // expo-router 사용
+import { useNavigation } from "@react-navigation/native"; // React Navigation 사용
 import styles from "../styles/MainStyle"; // 스타일 가져오기
 
-export default function Main() {
+export default function MainScreen() {
+  const navigation = useNavigation(); // useNavigation으로 네비게이션 객체 가져오기
+
   const data = [
     {
       section: "냉동실",
@@ -26,7 +28,7 @@ export default function Main() {
       ],
     },
     {
-      section: "야채칸",
+      section: "실온",
       items: [
         { id: "5", name: "당근", label: "Carrot" },
         { id: "6", name: "상추", label: "Lettuce" },
@@ -50,7 +52,6 @@ export default function Main() {
 
   return (
     <View style={styles.container}>
-      {/* 냉장고 섹션 */}
       <FlatList
         data={data}
         keyExtractor={(item) => item.section}
@@ -58,26 +59,33 @@ export default function Main() {
         contentContainerStyle={styles.list}
       />
 
-      {/* 하단 탭 네비게이션 */}
+      {/* 하단 네비게이션 바 */}
       <View style={styles.tabBar}>
-        <TouchableOpacity style={styles.tabItem}>
+        <TouchableOpacity
+          style={styles.tabItem}
+          onPress={() => navigation.navigate("MainScreen")}
+        >
           <Text style={styles.tabIcon}>📦</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.tabItem}>
+        <TouchableOpacity
+          style={styles.tabItem}
+          onPress={() => navigation.navigate("RecipeScreen")}
+        >
           <Text style={styles.tabIcon}>👨‍🍳</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.tabItem}>
+        <TouchableOpacity
+          style={styles.tabItem}
+          onPress={() => navigation.navigate("FriendScreen")}
+        >
           <Text style={styles.tabIcon}>👥</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.tabItem}>
+        <TouchableOpacity
+          style={styles.tabItem}
+          onPress={() => navigation.navigate("MypageScreen")}
+        >
           <Text style={styles.tabIcon}>🙋</Text>
         </TouchableOpacity>
       </View>
-
-      {/* 추가 버튼 */}
-      <TouchableOpacity style={styles.addButton}>
-        <Text style={styles.addIcon}>+</Text>
-      </TouchableOpacity>
     </View>
   );
 }
