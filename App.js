@@ -8,7 +8,13 @@ import React, { useCallback } from "react";
 import LoginScreen from "./src/screens/LoginScreen";
 import SignUpEmail from "./src/screens/SignUpEmailScreen";
 import SignUpBirth from "./src/screens/SignUpBirthScreen";
+import SignUpName from "./src/screens/SignUpNameScreen";
 import MainScreen from "./src/screens/MainScreen";
+import SignUpGender from "./src/screens/SignUpGenderScreen";
+import SignUpNickname from "./src/screens/SignUpNicknameScreen";
+import SignUpNumber from "./src/screens/SignUpNumberScreen";
+import SignUpPassword from "./src/screens/SignUpPasswordScreen";
+import SignUpProfile from "./src/screens/SignUpProfileScreen";
 
 import { fonts } from "./src/utils/fontStyles";
 
@@ -51,6 +57,11 @@ export default function App() {
           options={{ headerShown: false }}
         />
         <Stack.Screen
+          name="SignUpNameScreen"
+          component={SignUpName}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
           name="SignUpEmailScreen"
           component={SignUpEmail}
           options={{ headerShown: false }}
@@ -63,6 +74,31 @@ export default function App() {
         <Stack.Screen
           name="MainScreen"
           component={MainScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SignUpGenderScreen"
+          component={SignUpGender}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SignUpNicknameScreen"
+          component={SignUpNickname}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SignUpNumberScreen"
+          component={SignUpNumber}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SignUpPasswordScreen"
+          component={SignUpPassword}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SignUpProfileScreen"
+          component={SignUpProfile}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

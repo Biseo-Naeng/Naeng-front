@@ -5,28 +5,28 @@ import { fonts } from "../utils/fontStyles";
 import CustomText from "../components/CustomText";
 import styles from "../styles/SignUpStyle";
 
-export default function SignUpEmail() {
+export default function SignUpName() {
     const [borderBottomColor, setBorderBottomColor] = useState('lightgray');
-    const [email, setEmail] = useState('');
+    const [name, setName] = useState('');
     const navigation = useNavigation();
 
     return (
         <View style={styles.container}>
             <View style={styles.innerContainer}>
                 <View style={styles.titleContainer}>
-                    <CustomText style={styles.titleText}>이메일을 알려주세요</CustomText>
+                    <CustomText style={styles.titleText}>이름을 알려주세요</CustomText>
                 </View>
                 <View style={styles.inputContainer}>
                     <View style={styles.textInputView}>
                         <CustomText fontFamily={fonts.nRegular} style={styles.placeholderText}>
-                            이메일
+                            이름
                         </CustomText>
                         <TextInput
                             style={[styles.textInput, { borderBottomColor: borderBottomColor }]}
-                            value={email}
-                            placeholder="ex) abc@google.com"
+                            value={name}
+                            placeholder="ex) 홍길동"
                             fontFamily={fonts.nBold}
-                            onChangeText={(value) => setEmail(value)}
+                            onChangeText={(value) => setName(value)}
                             onFocus={() => setBorderBottomColor('#71de83')}
                             onEndEditing={() => setBorderBottomColor('lightgray')}
                         />
