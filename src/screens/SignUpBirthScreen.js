@@ -1,130 +1,50 @@
 import { useNavigation } from "@react-navigation/native";
-import React, {useState} from "react";
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import { View, TextInput, TouchableOpacity } from "react-native";
 import { fonts } from "../utils/fontStyles";
 import CustomText from "../components/CustomText";
+import styles from "../styles/SignUpStyle";
 
 export default function SignUpBirth() {
-    const [BorderBottomColor, setBorderBottomColor] = useState('lightgray');    
-    const [Birth, setBirth] = useState('');
+    const [borderBottomColor, setBorderBottomColor] = useState('lightgray');
+    const [birth, setBirth] = useState('');
     const navigation = useNavigation();
-    const MiddleView = () => {
-        return (
-        <View
-            style={styles.TextInptView}>
-                <CustomText
-                fontFamily={fonts.nRegular}
-                style={{
-                    color: 'lightgray',
-                    fontSize: 16,
-                }}>생년월일
-                </CustomText>
-                <TextInput 
-                style={styles.TextInput}
-                value={Birth}
-                placeholder="ex) 020514"  
-                fontFamily={fonts.nBold}                             
-                onChangeText={(value) => {
-                    setBirth(value)
-                }}
-                onFocus={() => {
-                    setBorderBottomColor('#71de83')
-                }}
-                onEndEditing={() => {
-                    setBorderBottomColor('lightgray')
-                }}
-                >
-                </TextInput>
-        </View>
-    );
-    };
 
-    const styles = StyleSheet.create({
-        input: {
-            height: 40,
-            margin: 12,
-            borderWidth: 1,
-            padding: 10,
-        },
-        TextInput: {
-            padding: 0,
-            margin: 0,
-            width: '100%',
-            height: '70%',
-            backgroundColor: 'white',
-            fontSize: 24,
-            fontWeight: '600',
-            borderBottomColor: BorderBottomColor,
-            borderBottomWidth: 1,
-        },
-        TextInptView: {
-            width: '100%',
-            height: '20%',            
-            marginTop: '15%',
-            display: 'flex',
-            justifyContent: 'center',   
-        }
-    });
     return (
-            <View
-                style={{
-                    width: '100%',
-                    height: '100%',
-                    backgroundColor: 'white',
-                }}>
-                <View style={{
-                    width: '90%',
-                    height: '100%',
-                    marginLeft: '5%',
-                }}>
-                    <View
-                        style={{
-                            height: '20%',
-                            width: '100%',
-                            display: 'flex',
-                            justifyContent: 'flex-end'
-                        }}>
-                        <CustomText
-                            style={{
-                                fontSize: 24,
-                            }}>생년월일을 알려주세요</CustomText>
-                    </View>
-                    <View
-                        style={{
-                            height: '50%',
-                            width: '100%',
-                        }}>
-                            {MiddleView()}
-                    </View>
-                    <View
-                        style={{
-                            height: '30%',
-                            width: '100%',  
-                            display: 'flex',  
-                            justifyContent: "flex-end",                      
-                        }}>
-                            <TouchableOpacity
-                            style={{
-                                backgroundColor: '#71de83',
-                                borderRadius: 6,
-                                margin: 10,
-                                paddingVertical: 10,
-                                display: 'flex',
-                                alignItems: 'center',                                
-                            }}
-                            onPress={() => {
-                                navigation.navigate("SignUpBirth", {screen: "SignUpBirth"})
-                            }}>
-                                <CustomText
-                                fontFamily={fonts.nExtraBold}
-                                style={{
-                                    color: 'white',
-                                    fontSize: 16,
-                                }}>다음</CustomText>
-                            </TouchableOpacity>
+        <View style={styles.container}>
+            <View style={styles.innerContainer}>
+                <View style={styles.titleContainer}>
+                    <CustomText style={styles.titleText}>생일을 알려주세요</CustomText>
+                </View>
+                <View style={styles.inputContainer}>
+                    <View style={styles.textInputView}>
+                        <CustomText fontFamily={fonts.nRegular} style={styles.placeholderText}>
+                            이름
+                        </CustomText>
+                        <TextInput
+                            style={[styles.textInput, { borderBottomColor: borderBottomColor }]}
+                            value={birth}
+                            placeholder="ex) 020514"
+                            fontFamily={fonts.nBold}
+                            onChangeText={(value) => setBirth(value)}
+                            onFocus={() => setBorderBottomColor('#71de83')}
+                            onEndEditing={() => setBorderBottomColor('lightgray')}
+                        />
                     </View>
                 </View>
+                <View style={styles.buttonContainer}>
+                    <TouchableOpacity
+                        style={styles.nextButton}
+                        onPress={() => {
+                            navigation.navigate("SignUpBirthScreen", { screen: "SignUpBirthScreen" });
+                        }}
+                    >
+                        <CustomText fontFamily={fonts.nExtraBold} style={styles.buttonText}>
+                            다음
+                        </CustomText>
+                    </TouchableOpacity>
+                </View>
             </View>
+        </View>
     );
 }
-
