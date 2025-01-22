@@ -25,6 +25,7 @@ export default function SignUpNumber() {
                             style={[styles.textInput, { borderBottomColor: borderBottomColor }]}
                             value={number}
                             placeholder="ex) 01012345678"
+                            keyboardType="number-pad"
                             fontFamily={fonts.nBold}
                             onChangeText={(value) => setNumber(value)}
                             onFocus={() => setBorderBottomColor('#71de83')}

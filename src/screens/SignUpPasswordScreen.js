@@ -2,13 +2,19 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { View, TextInput, TouchableOpacity } from "react-native";
 import { fonts } from "../utils/fontStyles";
+import Feather from '@expo/vector-icons/Feather';
 import CustomText from "../components/CustomText";
 import styles from "../styles/SignUpStyle";
 
 export default function SignUpPassword() {
     const [borderBottomColor, setBorderBottomColor] = useState('lightgray');
     const [password, setPassword] = useState('');
+    const [seePassword, setSeePassword] = useState(true);
     const navigation = useNavigation();
+
+    const seePasswordHandler = () => {
+        setSeePassword(!seePassword);
+    };
 
     return (
         <View style={styles.container}>
@@ -21,15 +27,35 @@ export default function SignUpPassword() {
                         <CustomText fontFamily={fonts.nRegular} style={styles.placeholderText}>
                             비밀번호
                         </CustomText>
-                        <TextInput
-                            style={[styles.textInput, { borderBottomColor: borderBottomColor }]}
-                            value={password}
-                            secureTextEntry={true}
-                            fontFamily={fonts.nBold}
-                            onChangeText={(value) => setPassword(value)}
-                            onFocus={() => setBorderBottomColor('#71de83')}
-                            onEndEditing={() => setBorderBottomColor('lightgray')}
-                        />
+                        <View style={{
+                            flexDirection: "row",
+                            borderBottomColor: borderBottomColor,
+                            borderBottomWidth: 1,
+                            width: '100%',
+                            height: '70%',
+                            backgroundColor: 'white',
+                            alignItems: 'center',
+                        }}>
+                            <TextInput
+                                style={[styles.textInput, { width: '90%', borderBottomWidth: 0,}]}
+                                value={password}
+                                secureTextEntry={seePassword}
+                                // fontFamily={fonts.nBold}
+                                placeholder="비밀번호를 입력해주세요(폰트적용안됨)"
+                                onChangeText={(value) => setPassword(value)}
+                                onFocus={() => setBorderBottomColor('#71de83')}
+                                onEndEditing={() => setBorderBottomColor('lightgray')}
+                            />
+                            {seePassword ? (
+                                <TouchableOpacity onPress={seePasswordHandler}>
+                                    <Feather name="eye" size={24} color="black" style={{ marginLeft: 5 }} />
+                                </TouchableOpacity>
+                            ) : (
+                                <TouchableOpacity onPress={seePasswordHandler}>
+                                    <Feather name="eye-off" size={24} color="black" style={{ marginLeft: 5 }} />
+                                </TouchableOpacity>
+                            )}
+                        </View>
                     </View>
                 </View>
                 <View style={styles.buttonContainer}>

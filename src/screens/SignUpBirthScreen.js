@@ -25,6 +25,7 @@ export default function SignUpBirth() {
                             style={[styles.textInput, { borderBottomColor: borderBottomColor }]}
                             value={birth}
                             placeholder="ex) 020514"
+                            keyboardType="number-pad"
                             fontFamily={fonts.nBold}
                             onChangeText={(value) => setBirth(value)}
                             onFocus={() => setBorderBottomColor('#71de83')}

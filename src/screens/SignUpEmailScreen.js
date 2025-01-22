@@ -25,6 +25,7 @@ export default function SignUpEmail() {
                             style={[styles.textInput, { borderBottomColor: borderBottomColor }]}
                             value={email}
                             placeholder="ex) abc@google.com"
+                            keyboardType="email-address"
                             fontFamily={fonts.nBold}
                             onChangeText={(value) => setEmail(value)}
                             onFocus={() => setBorderBottomColor('#71de83')}
