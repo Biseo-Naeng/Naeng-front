@@ -36,7 +36,7 @@ export default function SignUpGender() {
                     <TouchableOpacity
                         style={styles.nextButton}
                         onPress={() => {
-                            navigation.navigate("SignUpBirthScreen", { screen: "SignUpBirthScreen" });
+                            navigation.navigate("SignUpNumberScreen", { screen: "SignUpNumberScreen" });
                         }}
                     >
                         <CustomText fontFamily={fonts.nExtraBold} style={styles.buttonText}>

@@ -14,7 +14,7 @@ export default function SignUpProfile() {
         <View style={styles.container}>
             <View style={styles.innerContainer}>
                 <View style={styles.titleContainer}>
-                    <CustomText style={styles.titleText}>이름을 알려주세요</CustomText>
+                    <CustomText style={styles.titleText}>프로필 사진을 등록해주세요</CustomText>
                 </View>
                 <View style={styles.inputContainer}>
                     <View style={styles.textInputView}>

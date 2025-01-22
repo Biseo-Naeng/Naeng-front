@@ -19,7 +19,7 @@ export default function SignUpBirth() {
                 <View style={styles.inputContainer}>
                     <View style={styles.textInputView}>
                         <CustomText fontFamily={fonts.nRegular} style={styles.placeholderText}>
-                            이름
+                            생일
                         </CustomText>
                         <TextInput
                             style={[styles.textInput, { borderBottomColor: borderBottomColor }]}
@@ -36,7 +36,7 @@ export default function SignUpBirth() {
                     <TouchableOpacity
                         style={styles.nextButton}
                         onPress={() => {
-                            navigation.navigate("SignUpEmailScreen", { screen: "SignUpEmailScreen" });
+                            navigation.navigate("SignUpGenderScreen", { screen: "SignUpGenderScreen" });
                         }}
                     >
                         <CustomText fontFamily={fonts.nExtraBold} style={styles.buttonText}>

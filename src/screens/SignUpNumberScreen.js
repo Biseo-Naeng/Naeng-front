@@ -14,17 +14,17 @@ export default function SignUpNumber() {
         <View style={styles.container}>
             <View style={styles.innerContainer}>
                 <View style={styles.titleContainer}>
-                    <CustomText style={styles.titleText}>이름을 알려주세요</CustomText>
+                    <CustomText style={styles.titleText}>전화번호를 알려주세요</CustomText>
                 </View>
                 <View style={styles.inputContainer}>
                     <View style={styles.textInputView}>
                         <CustomText fontFamily={fonts.nRegular} style={styles.placeholderText}>
-                            이름
+                            전화번호
                         </CustomText>
                         <TextInput
                             style={[styles.textInput, { borderBottomColor: borderBottomColor }]}
                             value={number}
-                            placeholder="ex) 홍길동"
+                            placeholder="ex) 01012345678"
                             fontFamily={fonts.nBold}
                             onChangeText={(value) => setNumber(value)}
                             onFocus={() => setBorderBottomColor('#71de83')}
@@ -36,7 +36,7 @@ export default function SignUpNumber() {
                     <TouchableOpacity
                         style={styles.nextButton}
                         onPress={() => {
-                            navigation.navigate("SignUpBirthScreen", { screen: "SignUpBirthScreen" });
+                            navigation.navigate("SignUpProfileScreen", { screen: "SignUpProfileScreen" });
                         }}
                     >
                         <CustomText fontFamily={fonts.nExtraBold} style={styles.buttonText}>

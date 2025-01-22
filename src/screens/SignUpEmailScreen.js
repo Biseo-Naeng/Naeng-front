@@ -36,7 +36,7 @@ export default function SignUpEmail() {
                     <TouchableOpacity
                         style={styles.nextButton}
                         onPress={() => {
-                            navigation.navigate("SignUpBirthScreen", { screen: "SignUpBirthScreen" });
+                            navigation.navigate("SignUpPasswordScreen", { screen: "SignUpPasswordScreen" });
                         }}
                     >
                         <CustomText fontFamily={fonts.nExtraBold} style={styles.buttonText}>

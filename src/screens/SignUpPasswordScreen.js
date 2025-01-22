@@ -14,17 +14,17 @@ export default function SignUpPassword() {
         <View style={styles.container}>
             <View style={styles.innerContainer}>
                 <View style={styles.titleContainer}>
-                    <CustomText style={styles.titleText}>이름을 알려주세요</CustomText>
+                    <CustomText style={styles.titleText}>비밀번호를 입력해주세요</CustomText>
                 </View>
                 <View style={styles.inputContainer}>
                     <View style={styles.textInputView}>
                         <CustomText fontFamily={fonts.nRegular} style={styles.placeholderText}>
-                            이름
+                            비밀번호
                         </CustomText>
                         <TextInput
                             style={[styles.textInput, { borderBottomColor: borderBottomColor }]}
                             value={password}
-                            placeholder="ex) 홍길동"
+                            secureTextEntry={true}
                             fontFamily={fonts.nBold}
                             onChangeText={(value) => setPassword(value)}
                             onFocus={() => setBorderBottomColor('#71de83')}
@@ -36,7 +36,7 @@ export default function SignUpPassword() {
                     <TouchableOpacity
                         style={styles.nextButton}
                         onPress={() => {
-                            navigation.navigate("SignUpBirthScreen", { screen: "SignUpBirthScreen" });
+                            navigation.navigate("SignUpNameScreen", { screen: "SignUpNameScreen" });
                         }}
                     >
                         <CustomText fontFamily={fonts.nExtraBold} style={styles.buttonText}>
