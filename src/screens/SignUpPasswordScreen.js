@@ -40,19 +40,19 @@ export default function SignUpPassword() {
                                 style={[styles.textInput, { width: '90%', borderBottomWidth: 0,}]}
                                 value={password}
                                 secureTextEntry={seePassword}
-                                // fontFamily={fonts.nBold}
-                                placeholder="비밀번호를 입력해주세요(폰트적용안됨)"
+                                // 폰트 적용 안됨
+                                placeholder="비밀번호를 입력해주세요"
                                 onChangeText={(value) => setPassword(value)}
                                 onFocus={() => setBorderBottomColor('#71de83')}
                                 onEndEditing={() => setBorderBottomColor('lightgray')}
                             />
                             {seePassword ? (
                                 <TouchableOpacity onPress={seePasswordHandler}>
-                                    <Feather name="eye" size={24} color="black" style={{ marginLeft: 5 }} />
+                                    <Feather name="eye" size={24} color="gray" style={{ marginLeft: 5 }} />
                                 </TouchableOpacity>
                             ) : (
                                 <TouchableOpacity onPress={seePasswordHandler}>
-                                    <Feather name="eye-off" size={24} color="black" style={{ marginLeft: 5 }} />
+                                    <Feather name="eye-off" size={24} color="gray" style={{ marginLeft: 5 }} />
                                 </TouchableOpacity>
                             )}
                         </View>
