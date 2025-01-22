@@ -30,6 +30,15 @@ export default function App() {
     [fonts.nExtraBold]: require("./src/assets/fonts/NanumSquareEB.ttf"),
     [fonts.nLight]: require("./src/assets/fonts/NanumSquareL.ttf"),
     [fonts.nRegular]: require("./src/assets/fonts/NanumSquareR.ttf"),
+    SCDream1: require("./src/assets/fonts/SCDream1.otf"),
+    SCDream2: require("./src/assets/fonts/SCDream2.otf"),
+    SCDream3: require("./src/assets/fonts/SCDream3.otf"),
+    SCDream4: require("./src/assets/fonts/SCDream4.otf"),
+    SCDream5: require("./src/assets/fonts/SCDream5.otf"),
+    SCDream6: require("./src/assets/fonts/SCDream6.otf"),
+    SCDream7: require("./src/assets/fonts/SCDream7.otf"),
+    SCDream8: require("./src/assets/fonts/SCDream8.otf"),
+    SCDream9: require("./src/assets/fonts/SCDream9.otf"),
   });
 
 
