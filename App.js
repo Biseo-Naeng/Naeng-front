@@ -15,6 +15,7 @@ import SignUpNickname from "./src/screens/SignUpNicknameScreen";
 import SignUpNumber from "./src/screens/SignUpNumberScreen";
 import SignUpPassword from "./src/screens/SignUpPasswordScreen";
 import SignUpProfile from "./src/screens/SignUpProfileScreen";
+import SignUp from "./src/screens/SignUpScreen";
 
 import { fonts } from "./src/utils/fontStyles";
 
@@ -108,6 +109,11 @@ export default function App() {
         <Stack.Screen
           name="SignUpProfileScreen"
           component={SignUpProfile}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SignUpScreen"
+          component={SignUp}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
