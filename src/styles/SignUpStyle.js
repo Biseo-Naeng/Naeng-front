@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { fonts } from "../utils/fontStyles";
 
 export default StyleSheet.create({
     container: {
@@ -62,5 +63,22 @@ export default StyleSheet.create({
     buttonText: {
         color: 'white',
         fontSize: 16,
+    },
+    scrollView: {
+        maxHeight: '50%',
+    },
+    completedInputContainer: {
+        padding: 16,
+        borderBottomWidth: 1,
+        borderBottomColor: '#e0e0e0',
+    },
+    completedInputLabel: {
+        fontSize: 14,
+        color: '#888',
+    },
+    completedInputValue: {
+        fontSize: 16,
+        marginTop: 4,
+        fontFamily: fonts.nBold,
     },
 });
