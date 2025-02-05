@@ -29,9 +29,9 @@ export default function LoginScreen() {
 
       {/* 본문(content) 영역 */}
       <View style={styles.contentContainer}>
-        <CustomText style={styles.loginTitle} fontFamily={fonts.nBold}>
-          Login
-        </CustomText>
+        {/* <CustomText style={styles.loginTitle} fontFamily={fonts.nBold}>
+          LOGIN
+        </CustomText> */}
 
         {/* 로그인 폼 */}
         <View style={styles.loginForm}>
@@ -71,8 +71,12 @@ export default function LoginScreen() {
 
       {/* 풋터(하단 버튼들) 영역 */}
       <View style={styles.footerContainer}>
-        <Button title="Login" onPress={() => alert("Logged in")} />
-
+        <TouchableOpacity
+          onPress={() => alert("Logged in")}
+          style={[styles.button, { marginTop: 10 }]} // styles.button 스타일 적용  (styles.js)
+        >
+          <Text style={styles.buttonText}>LOGIN</Text>
+        </TouchableOpacity>
         <TouchableOpacity
           onPress={() =>
             navigation.navigate("SignUpEmailScreen", {
