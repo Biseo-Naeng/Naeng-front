@@ -89,9 +89,7 @@ export default function LoginScreen() {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() =>
-            navigation.navigate("MainScreen", { screen: "MainScreen" })
-          }
+          onPress={() => navigation.navigate("MainTab")}
           style={[styles.button, { marginTop: 10 }]}
         >
           <Text style={styles.buttonText}>Main(임시)</Text>
