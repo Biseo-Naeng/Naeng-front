@@ -62,10 +62,10 @@ export default function NewSignUp() {
       <Text>성별</Text>
       <View style={{ flexDirection: "row", marginBottom: 10 }}>
         <TouchableOpacity onPress={() => handleGenderChange("Male")} style={{ padding: 10, backgroundColor: form.gender === "Male" ? "blue" : "gray", marginRight: 10 }}>
-          <Text style={{ color: "white" }}>Male</Text>
+          <Text style={{ color: "white" }}>남자</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => handleGenderChange("Female")} style={{ padding: 10, backgroundColor: form.gender === "Female" ? "blue" : "gray" }}>
-          <Text style={{ color: "white" }}>Female</Text>
+          <Text style={{ color: "white" }}>여자</Text>
         </TouchableOpacity>
       </View>
 
