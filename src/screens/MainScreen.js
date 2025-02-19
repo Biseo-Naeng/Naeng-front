@@ -1,15 +1,10 @@
+// app/MainScreen.js
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-} from "react-native";
-import "expo-router/entry"; // expo-router 사용
-import styles from "../styles/MainStyle"; // 스타일 가져오기
+import { View, Text, StyleSheet, FlatList } from "react-native";
+import styles from "../styles/MainStyle"; // 기존 스타일
+// import "expo-router/entry"; // _layout.js에서 가져가기 때문에 보통 필요 없음
 
-export default function Main() {
+export default function MainScreen() {
   const data = [
     {
       section: "냉동실",
@@ -57,27 +52,10 @@ export default function Main() {
         renderItem={renderSection}
         contentContainerStyle={styles.list}
       />
-
-      {/* 하단 탭 네비게이션 */}
-      <View style={styles.tabBar}>
-        <TouchableOpacity style={styles.tabItem}>
-          <Text style={styles.tabIcon}>📦</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.tabItem}>
-          <Text style={styles.tabIcon}>👨‍🍳</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.tabItem}>
-          <Text style={styles.tabIcon}>👥</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.tabItem}>
-          <Text style={styles.tabIcon}>🙋</Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* 추가 버튼 */}
-      <TouchableOpacity style={styles.addButton}>
-        <Text style={styles.addIcon}>+</Text>
-      </TouchableOpacity>
+      {/* 
+        기존에 하단 탭을 수동으로 만든 <View style={styles.tabBar}> ... 은 
+        제거합니다. (탭 바는 _layout.js의 <Tabs>에서 관리)
+      */}
     </View>
   );
 }

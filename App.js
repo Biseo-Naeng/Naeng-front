@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import React, { useCallback } from "react";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import LoginScreen from "./src/screens/LoginScreen";
 import SignUpEmail from "./src/screens/SignUpEmailScreen";
@@ -17,8 +18,34 @@ import SignUpPassword from "./src/screens/SignUpPasswordScreen";
 import SignUpProfile from "./src/screens/SignUpProfileScreen";
 
 import { fonts } from "./src/utils/fontStyles";
+import RecipeScreen from "./src/screens/ResipeScreen";
+import FriendScreen from "./src/screens/FriendScreen";
+import MypageScreen from "./src/screens/MypageScreen";
 
 const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+
+function MainTab() {
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        tabBarStyle: {
+          height: 60, // 원하는 높이
+          borderTopColor: "#ccc",
+          borderTopWidth: 1,
+        },
+        // 탭 아이콘/라벨 스타일 등
+        tabBarActiveTintColor: "blue",
+        tabBarInactiveTintColor: "gray",
+      }}
+    >
+      <Tab.Screen name="Home" component={MainScreen} />
+      <Tab.Screen name="Recipe" component={RecipeScreen} />
+      <Tab.Screen name="Friend" component={FriendScreen} />
+      <Tab.Screen name="Mypage" component={MypageScreen} />
+    </Tab.Navigator>
+  );
+}
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -40,7 +67,6 @@ export default function App() {
     SCDream8: require("./src/assets/fonts/SCDream8.otf"),
     SCDream9: require("./src/assets/fonts/SCDream9.otf"),
   });
-
 
   // Prevent splash screen from auto-hiding
   React.useEffect(() => {
@@ -80,11 +106,11 @@ export default function App() {
           component={SignUpBirth}
           options={{ headerShown: false }}
         />
-        <Stack.Screen
+        {/* <Stack.Screen
           name="MainScreen"
           component={MainScreen}
           options={{ headerShown: false }}
-        />
+        /> */}
         <Stack.Screen
           name="SignUpGenderScreen"
           component={SignUpGender}
@@ -108,6 +134,11 @@ export default function App() {
         <Stack.Screen
           name="SignUpProfileScreen"
           component={SignUpProfile}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="MainTab"
+          component={MainTab} // 탭 내보내기
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
