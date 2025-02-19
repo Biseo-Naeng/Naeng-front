@@ -8,27 +8,30 @@ export default StyleSheet.create({
         backgroundColor: 'white',
     },
     innerContainer: {
-        width: '90%',
+        width: '100%',
         height: '100%',
-        marginLeft: '5%',
+        backgroundColor: 'red',
     },
     titleContainer: {
         height: '20%',
         width: '100%',
         display: 'flex',
         justifyContent: 'flex-end',
+        backgroundColor: 'orange',
     },
     titleText: {
         fontSize: 24,
     },
     inputContainer: {
-        height: '50%',
-        width: '100%',
+        height: '100%',
+        width: '90%',
+        marginLeft: '5%',
+        backgroundColor: 'yellow',
     },
     textInputView: {
         width: '100%',
-        height: '20%',
-        marginTop: '15%',
+        height: '10%',
+        marginTop: '10%',
         display: 'flex',
         justifyContent: 'center',
     },
@@ -66,9 +69,10 @@ export default StyleSheet.create({
     },
     scrollView: {
         maxHeight: '50%',
+        backgroundColor: 'black'
     },
     completedInputContainer: {
-        padding: 16,
+        paddingVertical: 16,
         borderBottomWidth: 1,
         borderBottomColor: '#e0e0e0',
     },
@@ -78,7 +82,14 @@ export default StyleSheet.create({
     },
     completedInputValue: {
         fontSize: 16,
-        marginTop: 4,
+        marginTop: 5,
         fontFamily: fonts.nBold,
+    },
+    completedTextInputView: {
+        width: '100%',
+        height: '40%',
+        marginTop: '10%',
+        display: 'flex',
+        justifyContent: 'center',
     },
 });

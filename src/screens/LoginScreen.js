@@ -50,7 +50,7 @@ export default function LoginScreen() {
                 </View>
                 <Button title="Login" onPress={() => alert("Logged in")} />
             </View>
-            <TouchableOpacity onPress={() => navigation.navigate('SignUpScreen', {screen: 'SignUpScreen'})}
+            <TouchableOpacity onPress={() => navigation.navigate('NewSignUpScreen', {screen: 'NewSignUpScreen'})}
                 style={[styles.button, { marginTop: 10 }]}>
                 <Text style={styles.buttonText}>Go to Signup</Text>
             </TouchableOpacity>
