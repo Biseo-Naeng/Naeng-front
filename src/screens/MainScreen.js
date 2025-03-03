@@ -12,49 +12,61 @@ import {
 import styles from "../styles/MainStyle";
 
 export default function MainScreen() {
-  // 1) data를 useState로 관리하도록 변경
+  // 카테고리별 섹션명을 매핑
+  const categoryToSectionMap = {
+    냉동: "냉동실",
+    냉장: "냉장실",
+    실온: "실온칸",
+    조미료: "조미료칸",
+  };
+
+  // 메인 data
   const [sectionsData, setSectionsData] = useState([
     {
       section: "냉동실",
       items: [
-        { id: "1", name: "고기", label: "Meat" },
-        { id: "2", name: "얼음", label: "Ice" },
-        { id: "7", name: "만두", label: "Dumpling" },
-        { id: "8", name: "새우", label: "Shrimp" },
+        { id: "1", name: "고기", instruction: "Meat" },
+        { id: "2", name: "얼음", instruction: "Ice" },
+        { id: "7", name: "만두", instruction: "Dumpling" },
+        { id: "8", name: "새우", instruction: "Shrimp" },
       ],
     },
     {
       section: "냉장실",
       items: [
-        { id: "3", name: "우유", label: "Milk" },
-        { id: "4", name: "토마토", label: "Tomato" },
-        { id: "9", name: "치즈", label: "Cheese" },
+        { id: "3", name: "우유", instruction: "Milk" },
+        { id: "4", name: "토마토", instruction: "Tomato" },
+        { id: "9", name: "치즈", instruction: "Cheese" },
       ],
     },
     {
       section: "실온칸",
       items: [
-        { id: "5", name: "라면", label: "Ramen" },
-        { id: "6", name: "참기름", label: "Sesame Oil" },
-        { id: "10", name: "통조림", label: "Canned Food" },
-        { id: "11", name: "과자", label: "Snacks" },
+        { id: "5", name: "라면", instruction: "Ramen" },
+        { id: "6", name: "참기름", instruction: "Sesame Oil" },
+        { id: "10", name: "통조림", instruction: "Canned Food" },
+        { id: "11", name: "과자", instruction: "Snacks" },
       ],
+    },
+    {
+      section: "조미료칸",
+      items: [],
     },
   ]);
 
-  // 기존 모달(“더보기” 눌렀을 때 열리는 디테일 모달)
+  // 기존 '더보기' 모달 상태
   const [modalVisible, setModalVisible] = useState(false);
   const [modalSectionTitle, setModalSectionTitle] = useState("");
   const [modalItems, setModalItems] = useState([]);
 
-  // 2) 재료 추가를 위한 모달 상태
+  // 재료 추가 모달 상태
   const [addModalVisible, setAddModalVisible] = useState(false);
-  // 어떤 섹션에 추가할 지 (예: "냉동실", "냉장실" 등)
-  const [selectedSection, setSelectedSection] = useState("");
-  // 새로 추가할 아이템의 정보 (이름, 라벨, 유통기한 등)
-  const [newItemName, setNewItemName] = useState("");
-  const [newItemLabel, setNewItemLabel] = useState("");
-  const [newItemExpire, setNewItemExpire] = useState("");
+
+  // 새 재료를 위한 State (user_id 제외)
+  const [newItemName, setNewItemName] = useState(""); // 재료 이름
+  const [newItemInstruction, setNewItemInstruction] = useState(""); // 재료 설명
+  const [newItemCategory, setNewItemCategory] = useState(""); // "냉동", "냉장", "실온", "조미료"
+  const [newItemExpirationDate, setNewItemExpirationDate] = useState(""); // 파기일
 
   // 섹션 내 아이템 전체보기(더보기) 모달 열기
   const handleShowMore = (sectionTitle, items) => {
@@ -63,46 +75,59 @@ export default function MainScreen() {
     setModalVisible(true);
   };
 
-  // 3) 재료 추가 모달 열기
-  const handleOpenAddModal = (sectionName) => {
-    setSelectedSection(sectionName);
-    // 혹시 이전에 입력했던 데이터가 남아있다면 초기화
+  // 재료 추가 모달 열기
+  const handleOpenAddModal = () => {
+    // 이전에 입력했던 데이터가 남아있다면 초기화
     setNewItemName("");
-    setNewItemLabel("");
-    setNewItemExpire("");
+    setNewItemInstruction("");
+    setNewItemCategory("");
+    setNewItemExpirationDate("");
     setAddModalVisible(true);
   };
 
-  // 4) 실제로 재료 추가 (새 아이템을 sectionsData에 삽입)
+  // 카테고리에 맞춰 재료를 넣어야 할 섹션의 index를 찾는 함수
+  const findSectionIndexByCategory = (data, category) => {
+    const targetSectionName = categoryToSectionMap[category] || "기타";
+    return data.findIndex((sec) => sec.section === targetSectionName);
+  };
+
+  // 실제로 재료 추가 (새 아이템을 sectionsData에 삽입)
   const handleAddNewItem = () => {
-    // 새 아이템
     const newItem = {
-      id: Date.now().toString(), // 간단히 Date.now() 사용해 id 생성
+      id: Date.now().toString(), // 간단히 Date.now() 사용
       name: newItemName,
-      label: newItemLabel,
-      expire: newItemExpire, // 유통기한 필드 (사용자가 넣은 값)
+      instruction: newItemInstruction,
+      expiration_date: newItemExpirationDate,
     };
 
-    // sectionsData를 업데이트
-    setSectionsData((prevData) =>
-      prevData.map((section) => {
-        if (section.section === selectedSection) {
-          return {
-            ...section,
-            items: [...section.items, newItem],
-          };
-        }
-        return section;
-      })
-    );
+    setSectionsData((prevData) => {
+      // 어떤 섹션에 넣을지 결정
+      const sectionIndex = findSectionIndexByCategory(
+        prevData,
+        newItemCategory
+      );
 
-    // 모달 닫기
+      // 만약 기존 섹션이 없다면, '기타' 섹션을 새로 만들어줄 수도 있음
+      if (sectionIndex === -1) {
+        // '기타' 섹션이 없으면 새로 추가
+        return [...prevData, { section: "기타", items: [newItem] }];
+      }
+
+      // 해당 섹션에 새 아이템 삽입
+      const updatedData = [...prevData];
+      updatedData[sectionIndex] = {
+        ...updatedData[sectionIndex],
+        items: [...updatedData[sectionIndex].items, newItem],
+      };
+      return updatedData;
+    });
+
     setAddModalVisible(false);
   };
 
-  // 섹션(냉동실/냉장실/실온칸 등)을 FlatList로 렌더
+  // 섹션(냉동실/냉장실/실온칸/조미료칸)을 FlatList로 렌더
   const renderSection = ({ item }) => {
-    // 최대 3개만 보여주기
+    // 최대 3개 미리보기
     const previewItems = item.items.slice(0, 3);
 
     return (
@@ -114,7 +139,7 @@ export default function MainScreen() {
         <View style={styles.itemsContainer}>
           {previewItems.map((subItem) => (
             <View key={subItem.id} style={styles.item}>
-              <Text style={styles.itemLabel}>{subItem.label}</Text>
+              <Text style={styles.itemLabel}>{subItem.instruction}</Text>
               <Text style={styles.itemName}>{subItem.name}</Text>
             </View>
           ))}
@@ -128,11 +153,6 @@ export default function MainScreen() {
             <Text style={styles.moreButton}>더보기...</Text>
           </TouchableOpacity>
         )}
-
-        {/* 재료 추가 버튼 */}
-        <TouchableOpacity onPress={() => handleOpenAddModal(item.section)}>
-          <Text style={localStyles.addButton}>+ 재료 추가</Text>
-        </TouchableOpacity>
       </View>
     );
   };
@@ -146,6 +166,16 @@ export default function MainScreen() {
         renderItem={renderSection}
         contentContainerStyle={styles.list}
       />
+
+      {/* 화면 하단에 재료 추가 버튼 하나 두기 */}
+      <View style={localStyles.bottomContainer}>
+        <TouchableOpacity
+          style={localStyles.addMainButton}
+          onPress={handleOpenAddModal}
+        >
+          <Text style={localStyles.addMainButtonText}>+ 재료 추가</Text>
+        </TouchableOpacity>
+      </View>
 
       {/* (1) '더보기'를 눌렀을 때 표시되는 모달 */}
       <Modal
@@ -164,7 +194,7 @@ export default function MainScreen() {
               keyExtractor={(item) => item.id}
               renderItem={({ item }) => (
                 <View style={styles.item}>
-                  <Text style={styles.itemLabel}>{item.label}</Text>
+                  <Text style={styles.itemLabel}>{item.instruction}</Text>
                   <Text style={styles.itemName}>{item.name}</Text>
                 </View>
               )}
@@ -185,11 +215,9 @@ export default function MainScreen() {
       >
         <View style={localStyles.modalBackground}>
           <View style={localStyles.modalContainer}>
-            <Text style={localStyles.modalTitle}>
-              {selectedSection}에 재료 추가
-            </Text>
+            <Text style={localStyles.modalTitle}>재료 추가</Text>
 
-            {/* 재료 이름 입력 */}
+            {/* 재료 이름 */}
             <TextInput
               style={localStyles.input}
               placeholder="재료 이름"
@@ -197,20 +225,28 @@ export default function MainScreen() {
               onChangeText={setNewItemName}
             />
 
-            {/* 라벨(영문명) 입력 */}
+            {/* 재료 설명 */}
             <TextInput
               style={localStyles.input}
-              placeholder="레이블(예: Meat, Milk)"
-              value={newItemLabel}
-              onChangeText={setNewItemLabel}
+              placeholder="재료 설명"
+              value={newItemInstruction}
+              onChangeText={setNewItemInstruction}
             />
 
-            {/* 유통기한(임의) 입력 */}
+            {/* 카테고리 (냉동, 냉장, 실온, 조미료) */}
             <TextInput
               style={localStyles.input}
-              placeholder="유통기한 (예: 2025-12-31)"
-              value={newItemExpire}
-              onChangeText={setNewItemExpire}
+              placeholder="카테고리 (예: 냉동, 냉장, 실온, 조미료)"
+              value={newItemCategory}
+              onChangeText={setNewItemCategory}
+            />
+
+            {/* 파기일 (유통기한, expiration_date) */}
+            <TextInput
+              style={localStyles.input}
+              placeholder="파기일 (예: 2025-12-31)"
+              value={newItemExpirationDate}
+              onChangeText={setNewItemExpirationDate}
             />
 
             {/* '추가' 및 '취소' 버튼 */}
@@ -253,8 +289,21 @@ const localStyles = StyleSheet.create({
     padding: 8,
     marginBottom: 8,
   },
-  addButton: {
-    marginTop: 8,
-    color: "blue",
+  bottomContainer: {
+    // 메인 화면 하단(또는 상단)에 고정하기 위한 스타일 예시
+    position: "absolute",
+    bottom: 20,
+    alignSelf: "center",
+  },
+  addMainButton: {
+    backgroundColor: "blue",
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    borderRadius: 8,
+  },
+  addMainButtonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
