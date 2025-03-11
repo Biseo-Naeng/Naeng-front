@@ -8,7 +8,10 @@ import {
   StyleSheet,
   Button,
   TextInput,
+  Platform,
 } from "react-native";
+import { Picker } from "@react-native-picker/picker";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import styles from "../styles/MainStyle";
 
 export default function MainScreen() {
@@ -25,27 +28,47 @@ export default function MainScreen() {
     {
       section: "냉동실",
       items: [
-        { id: "1", name: "고기", instruction: "Meat" },
-        { id: "2", name: "얼음", instruction: "Ice" },
-        { id: "7", name: "만두", instruction: "Dumpling" },
-        { id: "8", name: "새우", instruction: "Shrimp" },
+        {
+          id: "1",
+          name: "고기",
+          instruction: "Meat",
+          expiration_date: "2025-01-01",
+        },
+        { id: "2", name: "얼음", instruction: "Ice", expiration_date: "" },
+        { id: "7", name: "만두", instruction: "Dumpling", expiration_date: "" },
+        { id: "8", name: "새우", instruction: "Shrimp", expiration_date: "" },
       ],
     },
     {
       section: "냉장실",
       items: [
-        { id: "3", name: "우유", instruction: "Milk" },
-        { id: "4", name: "토마토", instruction: "Tomato" },
-        { id: "9", name: "치즈", instruction: "Cheese" },
+        {
+          id: "3",
+          name: "우유",
+          instruction: "Milk",
+          expiration_date: "2025-01-02",
+        },
+        { id: "4", name: "토마토", instruction: "Tomato", expiration_date: "" },
+        { id: "9", name: "치즈", instruction: "Cheese", expiration_date: "" },
       ],
     },
     {
       section: "실온칸",
       items: [
-        { id: "5", name: "라면", instruction: "Ramen" },
-        { id: "6", name: "참기름", instruction: "Sesame Oil" },
-        { id: "10", name: "통조림", instruction: "Canned Food" },
-        { id: "11", name: "과자", instruction: "Snacks" },
+        { id: "5", name: "라면", instruction: "Ramen", expiration_date: "" },
+        {
+          id: "6",
+          name: "참기름",
+          instruction: "Sesame Oil",
+          expiration_date: "",
+        },
+        {
+          id: "10",
+          name: "통조림",
+          instruction: "Canned Food",
+          expiration_date: "",
+        },
+        { id: "11", name: "과자", instruction: "Snacks", expiration_date: "" },
       ],
     },
     {
@@ -54,66 +77,74 @@ export default function MainScreen() {
     },
   ]);
 
-  // 기존 '더보기' 모달 상태
+  // '더보기' 모달 상태
   const [modalVisible, setModalVisible] = useState(false);
   const [modalSectionTitle, setModalSectionTitle] = useState("");
   const [modalItems, setModalItems] = useState([]);
 
-  // 재료 추가 모달 상태
+  // '재료 추가' 모달 상태
   const [addModalVisible, setAddModalVisible] = useState(false);
 
-  // 새 재료를 위한 State (user_id 제외)
-  const [newItemName, setNewItemName] = useState(""); // 재료 이름
-  const [newItemInstruction, setNewItemInstruction] = useState(""); // 재료 설명
-  const [newItemCategory, setNewItemCategory] = useState(""); // "냉동", "냉장", "실온", "조미료"
-  const [newItemExpirationDate, setNewItemExpirationDate] = useState(""); // 파기일
+  // 새 재료 입력 상태
+  const [newItemName, setNewItemName] = useState("");
+  const [newItemInstruction, setNewItemInstruction] = useState("");
+  const [newItemCategory, setNewItemCategory] = useState("냉동");
+  const [datePickerVisible, setDatePickerVisible] = useState(false);
+  const [newItemExpirationDate, setNewItemExpirationDate] = useState(null);
 
-  // 섹션 내 아이템 전체보기(더보기) 모달 열기
+  // '아이템 수정' 모달 상태
+  const [editModalVisible, setEditModalVisible] = useState(false);
+  const [editItem, setEditItem] = useState(null);
+  const [editSectionIndex, setEditSectionIndex] = useState(null);
+  const [editItemIndex, setEditItemIndex] = useState(null);
+
+  // ---------- 함수들 ----------
+
+  // (1) '더보기' 버튼 -> 모달 열기
   const handleShowMore = (sectionTitle, items) => {
     setModalSectionTitle(sectionTitle);
     setModalItems(items);
     setModalVisible(true);
   };
 
-  // 재료 추가 모달 열기
+  // (2) '재료 추가' 버튼 -> 모달 열기
   const handleOpenAddModal = () => {
-    // 이전에 입력했던 데이터가 남아있다면 초기화
     setNewItemName("");
     setNewItemInstruction("");
-    setNewItemCategory("");
-    setNewItemExpirationDate("");
+    setNewItemCategory("냉동");
+    setNewItemExpirationDate(null);
     setAddModalVisible(true);
   };
 
-  // 카테고리에 맞춰 재료를 넣어야 할 섹션의 index를 찾는 함수
+  // 카테고리를 섹션 인덱스로 변환
   const findSectionIndexByCategory = (data, category) => {
     const targetSectionName = categoryToSectionMap[category] || "기타";
     return data.findIndex((sec) => sec.section === targetSectionName);
   };
 
-  // 실제로 재료 추가 (새 아이템을 sectionsData에 삽입)
+  // 새 아이템 추가
   const handleAddNewItem = () => {
+    const formattedDate =
+      newItemExpirationDate instanceof Date
+        ? formatDate(newItemExpirationDate)
+        : "";
+
     const newItem = {
-      id: Date.now().toString(), // 간단히 Date.now() 사용
+      id: Date.now().toString(),
       name: newItemName,
       instruction: newItemInstruction,
-      expiration_date: newItemExpirationDate,
+      expiration_date: formattedDate,
     };
 
     setSectionsData((prevData) => {
-      // 어떤 섹션에 넣을지 결정
       const sectionIndex = findSectionIndexByCategory(
         prevData,
         newItemCategory
       );
-
-      // 만약 기존 섹션이 없다면, '기타' 섹션을 새로 만들어줄 수도 있음
       if (sectionIndex === -1) {
-        // '기타' 섹션이 없으면 새로 추가
+        // '기타' 섹션이 없으면 만들어줌
         return [...prevData, { section: "기타", items: [newItem] }];
       }
-
-      // 해당 섹션에 새 아이템 삽입
       const updatedData = [...prevData];
       updatedData[sectionIndex] = {
         ...updatedData[sectionIndex],
@@ -125,30 +156,88 @@ export default function MainScreen() {
     setAddModalVisible(false);
   };
 
-  // 섹션(냉동실/냉장실/실온칸/조미료칸)을 FlatList로 렌더
-  const renderSection = ({ item }) => {
-    // 최대 3개 미리보기
-    const previewItems = item.items.slice(0, 3);
+  // 아이템을 탭했을 때 -> 수정 모달 열기
+  const handleEditPress = (item, sectionIndex, itemIndex) => {
+    setEditItem({ ...item });
+    setEditSectionIndex(sectionIndex);
+    setEditItemIndex(itemIndex);
+    setEditModalVisible(true);
+  };
+
+  // 수정 저장
+  const handleSaveEdit = () => {
+    const formattedDate =
+      editItem?.expiration_date instanceof Date
+        ? formatDate(editItem.expiration_date)
+        : editItem.expiration_date || "";
+
+    setSectionsData((prevData) => {
+      const updatedData = [...prevData];
+      const itemsCopy = [...updatedData[editSectionIndex].items];
+
+      itemsCopy[editItemIndex] = {
+        ...itemsCopy[editItemIndex],
+        name: editItem.name,
+        instruction: editItem.instruction,
+        expiration_date: formattedDate,
+      };
+      updatedData[editSectionIndex] = {
+        ...updatedData[editSectionIndex],
+        items: itemsCopy,
+      };
+      return updatedData;
+    });
+
+    setEditModalVisible(false);
+  };
+
+  // 아이템 삭제
+  const handleDeleteItem = () => {
+    setSectionsData((prevData) => {
+      const updatedData = [...prevData];
+      const itemsCopy = [...updatedData[editSectionIndex].items];
+      itemsCopy.splice(editItemIndex, 1);
+      updatedData[editSectionIndex] = {
+        ...updatedData[editSectionIndex],
+        items: itemsCopy,
+      };
+      return updatedData;
+    });
+    setEditModalVisible(false);
+  };
+
+  // (3) 섹션 렌더링
+  const renderSection = ({ item: sectionData, index: sectionIndex }) => {
+    // 최대 3개만 미리보기
+    const previewItems = sectionData.items.slice(0, 3);
 
     return (
       <View style={styles.section}>
-        {/* 섹션 제목 */}
-        <Text style={styles.sectionTitle}>{item.section}</Text>
+        <Text style={styles.sectionTitle}>{sectionData.section}</Text>
 
-        {/* 아이템 미리보기 */}
-        <View style={styles.itemsContainer}>
-          {previewItems.map((subItem) => (
-            <View key={subItem.id} style={styles.item}>
-              <Text style={styles.itemLabel}>{subItem.instruction}</Text>
-              <Text style={styles.itemName}>{subItem.name}</Text>
-            </View>
+        {/* flexWrap + width: "30%" 로 한 줄에 최대 3개 */}
+        <View style={localStyles.itemsContainer}>
+          {previewItems.map((subItem, subIndex) => (
+            <TouchableOpacity
+              key={subItem.id}
+              style={localStyles.itemBox}
+              onPress={() => handleEditPress(subItem, sectionIndex, subIndex)}
+            >
+              <Text style={localStyles.itemName}>{subItem.name}</Text>
+              <Text style={localStyles.itemDesc}>{subItem.instruction}</Text>
+              <Text style={localStyles.itemDate}>
+                {subItem.expiration_date || "-"}
+              </Text>
+            </TouchableOpacity>
           ))}
         </View>
 
-        {/* 아이템이 3개 초과일 때에만 '더보기' 버튼 표시 */}
-        {item.items.length > 3 && (
+        {/* 3개 초과 -> '더보기' 버튼 */}
+        {sectionData.items.length > 3 && (
           <TouchableOpacity
-            onPress={() => handleShowMore(item.section, item.items)}
+            onPress={() =>
+              handleShowMore(sectionData.section, sectionData.items)
+            }
           >
             <Text style={styles.moreButton}>더보기...</Text>
           </TouchableOpacity>
@@ -157,17 +246,87 @@ export default function MainScreen() {
     );
   };
 
+  // (4) '더보기' 모달에서 모든 아이템 표시
+  // FlatList를 3열로
+  const renderModalContent = () => {
+    const sectionIndex = sectionsData.findIndex(
+      (sec) => sec.section === modalSectionTitle
+    );
+
+    return (
+      <FlatList
+        data={modalItems}
+        keyExtractor={(item) => item.id}
+        numColumns={3} // 한 줄에 최대 3개
+        columnWrapperStyle={{
+          justifyContent: "flex-start",
+          // 만약 여백이 필요하면 아래처럼
+          // marginBottom: 8,
+        }}
+        renderItem={({ item, index }) => (
+          <TouchableOpacity
+            style={localStyles.itemBox}
+            onPress={() => {
+              setModalVisible(false);
+              handleEditPress(item, sectionIndex, index);
+            }}
+          >
+            <Text style={localStyles.itemName}>{item.name}</Text>
+            <Text style={localStyles.itemDesc}>{item.instruction}</Text>
+            <Text style={localStyles.itemDate}>
+              {item.expiration_date || "-"}
+            </Text>
+          </TouchableOpacity>
+        )}
+      />
+    );
+  };
+
+  // 날짜 Picker (새 아이템)
+  const handleDateChange = (event, selectedDate) => {
+    if (Platform.OS === "android") {
+      setDatePickerVisible(false);
+    }
+    if (selectedDate) {
+      setNewItemExpirationDate(selectedDate);
+    }
+  };
+
+  // 날짜 Picker (수정 모달)
+  const [editDatePickerVisible, setEditDatePickerVisible] = useState(false);
+
+  const handleEditDateChange = (event, selectedDate) => {
+    if (Platform.OS === "android") {
+      setEditDatePickerVisible(false);
+    }
+    if (selectedDate) {
+      setEditItem((prev) => ({
+        ...prev,
+        expiration_date: selectedDate,
+      }));
+    }
+  };
+
+  // 날짜 포맷 "yyyy-mm-dd"
+  const formatDate = (dateObj) => {
+    if (!(dateObj instanceof Date)) return dateObj;
+    const y = dateObj.getFullYear();
+    const m = String(dateObj.getMonth() + 1).padStart(2, "0");
+    const d = String(dateObj.getDate()).padStart(2, "0");
+    return `${y}-${m}-${d}`;
+  };
+
   return (
     <View style={styles.container}>
       {/* 메인 목록 */}
       <FlatList
         data={sectionsData}
-        keyExtractor={(item) => item.section}
+        keyExtractor={(section) => section.section}
         renderItem={renderSection}
         contentContainerStyle={styles.list}
       />
 
-      {/* 화면 하단에 재료 추가 버튼 하나 두기 */}
+      {/* 화면 하단의 + 재료 추가 버튼 */}
       <View style={localStyles.bottomContainer}>
         <TouchableOpacity
           style={localStyles.addMainButton}
@@ -177,7 +336,7 @@ export default function MainScreen() {
         </TouchableOpacity>
       </View>
 
-      {/* (1) '더보기'를 눌렀을 때 표시되는 모달 */}
+      {/* (1) '더보기' 모달 */}
       <Modal
         visible={modalVisible}
         animationType="slide"
@@ -188,25 +347,14 @@ export default function MainScreen() {
           <View style={localStyles.modalContainer}>
             <Text style={localStyles.modalTitle}>{modalSectionTitle}</Text>
 
-            {/* 전체 아이템 표시 */}
-            <FlatList
-              data={modalItems}
-              keyExtractor={(item) => item.id}
-              renderItem={({ item }) => (
-                <View style={styles.item}>
-                  <Text style={styles.itemLabel}>{item.instruction}</Text>
-                  <Text style={styles.itemName}>{item.name}</Text>
-                </View>
-              )}
-            />
+            {renderModalContent()}
 
-            {/* 닫기 버튼 */}
             <Button title="닫기" onPress={() => setModalVisible(false)} />
           </View>
         </View>
       </Modal>
 
-      {/* (2) '재료 추가' 버튼을 눌렀을 때 표시되는 모달 (폼) */}
+      {/* (2) '재료 추가' 모달 */}
       <Modal
         visible={addModalVisible}
         animationType="slide"
@@ -217,7 +365,7 @@ export default function MainScreen() {
           <View style={localStyles.modalContainer}>
             <Text style={localStyles.modalTitle}>재료 추가</Text>
 
-            {/* 재료 이름 */}
+            {/* 이름 */}
             <TextInput
               style={localStyles.input}
               placeholder="재료 이름"
@@ -225,7 +373,7 @@ export default function MainScreen() {
               onChangeText={setNewItemName}
             />
 
-            {/* 재료 설명 */}
+            {/* 설명 */}
             <TextInput
               style={localStyles.input}
               placeholder="재료 설명"
@@ -233,25 +381,51 @@ export default function MainScreen() {
               onChangeText={setNewItemInstruction}
             />
 
-            {/* 카테고리 (냉동, 냉장, 실온, 조미료) */}
-            <TextInput
-              style={localStyles.input}
-              placeholder="카테고리 (예: 냉동, 냉장, 실온, 조미료)"
-              value={newItemCategory}
-              onChangeText={setNewItemCategory}
-            />
+            {/* 카테고리 Picker */}
+            <Text style={{ marginTop: 8, marginBottom: 4 }}>카테고리</Text>
+            <View style={localStyles.pickerContainer}>
+              <Picker
+                selectedValue={newItemCategory}
+                onValueChange={(val) => setNewItemCategory(val)}
+                mode="dropdown"
+                style={{ height: 50 }}
+                dropdownIconColor="#333"
+              >
+                <Picker.Item label="냉동" value="냉동" />
+                <Picker.Item label="냉장" value="냉장" />
+                <Picker.Item label="실온" value="실온" />
+                <Picker.Item label="조미료" value="조미료" />
+              </Picker>
+            </View>
 
-            {/* 파기일 (유통기한, expiration_date) */}
-            <TextInput
-              style={localStyles.input}
-              placeholder="파기일 (예: 2025-12-31)"
-              value={newItemExpirationDate}
-              onChangeText={setNewItemExpirationDate}
-            />
+            {/* 파기일 */}
+            <Text style={{ marginTop: 8, marginBottom: 4 }}>파기일 선택</Text>
+            <TouchableOpacity
+              style={localStyles.dateButton}
+              onPress={() => setDatePickerVisible(true)}
+            >
+              <Text style={{ color: "#fff" }}>
+                {newItemExpirationDate
+                  ? formatDate(newItemExpirationDate)
+                  : "날짜 선택"}
+              </Text>
+            </TouchableOpacity>
+            {datePickerVisible && (
+              <DateTimePicker
+                value={newItemExpirationDate || new Date()}
+                mode="date"
+                display="default"
+                onChange={handleDateChange}
+              />
+            )}
 
-            {/* '추가' 및 '취소' 버튼 */}
+            {/* 추가 & 취소 버튼 */}
             <View
-              style={{ flexDirection: "row", justifyContent: "space-between" }}
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                marginTop: 16,
+              }}
             >
               <Button title="추가" onPress={handleAddNewItem} />
               <Button title="취소" onPress={() => setAddModalVisible(false)} />
@@ -259,21 +433,100 @@ export default function MainScreen() {
           </View>
         </View>
       </Modal>
+
+      {/* (3) '아이템 수정' 모달 */}
+      <Modal
+        visible={editModalVisible}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setEditModalVisible(false)}
+      >
+        <View style={localStyles.modalBackground}>
+          <View style={localStyles.modalContainer}>
+            <Text style={localStyles.modalTitle}>아이템 수정</Text>
+
+            {editItem && (
+              <>
+                {/* 이름 */}
+                <TextInput
+                  style={localStyles.input}
+                  placeholder="재료 이름"
+                  value={editItem.name}
+                  onChangeText={(text) =>
+                    setEditItem((prev) => ({ ...prev, name: text }))
+                  }
+                />
+
+                {/* 설명 */}
+                <TextInput
+                  style={localStyles.input}
+                  placeholder="재료 설명"
+                  value={editItem.instruction}
+                  onChangeText={(text) =>
+                    setEditItem((prev) => ({ ...prev, instruction: text }))
+                  }
+                />
+
+                {/* 파기일 */}
+                <Text style={{ marginTop: 8, marginBottom: 4 }}>파기일</Text>
+                <TouchableOpacity
+                  style={localStyles.dateButton}
+                  onPress={() => setEditDatePickerVisible(true)}
+                >
+                  <Text style={{ color: "#fff" }}>
+                    {editItem.expiration_date instanceof Date
+                      ? formatDate(editItem.expiration_date)
+                      : editItem.expiration_date
+                      ? editItem.expiration_date
+                      : "날짜 선택"}
+                  </Text>
+                </TouchableOpacity>
+                {editDatePickerVisible && (
+                  <DateTimePicker
+                    value={
+                      editItem.expiration_date instanceof Date
+                        ? editItem.expiration_date
+                        : new Date()
+                    }
+                    mode="date"
+                    display="default"
+                    onChange={handleEditDateChange}
+                  />
+                )}
+
+                {/* 저장 & 삭제 & 닫기 */}
+                <View style={{ marginTop: 16 }}>
+                  <Button title="저장" onPress={handleSaveEdit} />
+                </View>
+                <View style={{ marginTop: 8 }}>
+                  <Button title="삭제" color="red" onPress={handleDeleteItem} />
+                </View>
+                <View style={{ marginTop: 8 }}>
+                  <Button
+                    title="취소"
+                    onPress={() => setEditModalVisible(false)}
+                  />
+                </View>
+              </>
+            )}
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
 
-// 모달 등을 위한 추가 스타일
+// ---------- 추가 스타일 ----------
 const localStyles = StyleSheet.create({
   modalBackground: {
     flex: 1,
-    backgroundColor: "rgba(0,0,0,0.5)", // 어두운 반투명 배경
+    backgroundColor: "rgba(0,0,0,0.5)",
     justifyContent: "center",
     alignItems: "center",
   },
   modalContainer: {
     width: "80%",
-    maxHeight: "70%",
+    maxHeight: "80%",
     backgroundColor: "#fff",
     borderRadius: 8,
     padding: 16,
@@ -290,7 +543,6 @@ const localStyles = StyleSheet.create({
     marginBottom: 8,
   },
   bottomContainer: {
-    // 메인 화면 하단(또는 상단)에 고정하기 위한 스타일 예시
     position: "absolute",
     bottom: 20,
     alignSelf: "center",
@@ -305,5 +557,59 @@ const localStyles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
+  },
+  dateButton: {
+    backgroundColor: "blue",
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    borderRadius: 6,
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  pickerContainer: {
+    borderWidth: 1,
+    borderColor: "#aaa",
+    borderRadius: 8,
+    backgroundColor: "#fafafa",
+    paddingHorizontal: 8,
+    marginBottom: 8,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+
+  // (A) 섹션 미리보기 부분: 3개씩 FlexWrap
+  itemsContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "flex-start", // 왼쪽 정렬
+    // 만약 행간,열간 간격이 필요하다면:
+    // gap: 8,    // RN 0.71+ 지원
+  },
+  // (A) 한 개 아이템 박스
+  itemBox: {
+    width: "30%", // 한 행에 3개
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
+    padding: 8,
+    marginBottom: 8,
+    marginRight: 8, // 필요 시 조정 (또는 gap 속성 사용)
+  },
+  itemName: {
+    fontSize: 14,
+    fontWeight: "600",
+    marginBottom: 2,
+  },
+  itemDesc: {
+    fontSize: 12,
+    color: "#555",
+    marginBottom: 2,
+  },
+  itemDate: {
+    fontSize: 12,
+    color: "#999",
   },
 });
