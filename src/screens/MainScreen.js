@@ -32,7 +32,7 @@ export default function MainScreen() {
           id: "1",
           name: "고기",
           instruction: "Meat",
-          expiration_date: "2025-01-01",
+          expiration_date: "2025-01-02",
         },
         { id: "2", name: "얼음", instruction: "Ice", expiration_date: "" },
         { id: "7", name: "만두", instruction: "Dumpling", expiration_date: "" },
