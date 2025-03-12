@@ -21,6 +21,7 @@ import { fonts } from "./src/utils/fontStyles";
 import RecipeScreen from "./src/screens/ResipeScreen";
 import FriendScreen from "./src/screens/FriendScreen";
 import MypageScreen from "./src/screens/MypageScreen";
+import EditProfileScreen from "./src/screens/EditProfileScreen";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -42,7 +43,7 @@ function MainTab() {
       <Tab.Screen name="Home" component={MainScreen} />
       <Tab.Screen name="Recipe" component={RecipeScreen} />
       <Tab.Screen name="Friend" component={FriendScreen} />
-      <Tab.Screen name="Mypage" component={MypageScreen} />
+      <Tab.Screen name="Mypage" component={MypageScreen} options={{ headerShown: false }} />      
     </Tab.Navigator>
   );
 }
@@ -141,6 +142,10 @@ export default function App() {
           component={MainTab} // 탭 내보내기
           options={{ headerShown: false }}
         />
+        <Stack.Screen 
+        name="EditProfile" 
+        component={EditProfileScreen} 
+        options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
