@@ -8,13 +8,13 @@ const recipes = [
   { id: "3", image: "https://via.placeholder.com/150", user: "HomeCookC", views: 95, bookmarks: 30, title: "Pancakes" },
 ];
 
-export default function RecipeScreen() {
+export default function RecipeScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>모두의 레시피</Text>
+      <Text style={styles.title}>레시피 화면 예시</Text>
       <TextInput 
         style={styles.searchBar} 
-        placeholder="재료나 카테고리로 검색" 
+        placeholder="Search by ingredient or category" 
       />
       <FlatList
         data={recipes}
@@ -38,6 +38,9 @@ export default function RecipeScreen() {
           </View>
         )}
       />
+      <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('RecipeForm')}>
+        <Text style={styles.addButtonText}>+ 레시피 등록</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -93,5 +96,17 @@ const styles = StyleSheet.create({
   statText: {
     marginLeft: 4,
     color: "gray",
+  },
+  addButton: {
+    marginTop: 20,
+    backgroundColor: "#ff6347",
+    padding: 12,
+    borderRadius: 8,
+    alignItems: "center",
+  },
+  addButtonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });

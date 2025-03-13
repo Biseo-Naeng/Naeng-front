@@ -19,6 +19,7 @@ import SignUpProfile from "./src/screens/SignUpProfileScreen";
 
 import { fonts } from "./src/utils/fontStyles";
 import RecipeScreen from "./src/screens/RecipeScreen";
+import RecipeForm from "./src/screens/RecipeFormScreen";
 import FriendScreen from "./src/screens/FriendScreen";
 import MypageScreen from "./src/screens/MypageScreen";
 import EditProfileScreen from "./src/screens/EditProfileScreen";
@@ -148,8 +149,13 @@ export default function App() {
         options={{ headerShown: false }} 
         />
         <Stack.Screen 
-        name="RecipeScreen.js" 
+        name="Recipe" 
         component={RecipeScreen} 
+        options={{ headerShown: false }} 
+        />
+        <Stack.Screen 
+        name="RecipeForm" 
+        component={RecipeForm} 
         options={{ headerShown: false }} 
         />
       </Stack.Navigator>
