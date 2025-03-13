@@ -18,7 +18,8 @@ import SignUpPassword from "./src/screens/SignUpPasswordScreen";
 import SignUpProfile from "./src/screens/SignUpProfileScreen";
 
 import { fonts } from "./src/utils/fontStyles";
-import RecipeScreen from "./src/screens/ResipeScreen";
+import RecipeScreen from "./src/screens/RecipeScreen";
+import RecipeForm from "./src/screens/RecipeFormScreen";
 import FriendScreen from "./src/screens/FriendScreen";
 import MypageScreen from "./src/screens/MypageScreen";
 import EditProfileScreen from "./src/screens/EditProfileScreen";
@@ -41,7 +42,7 @@ function MainTab() {
       }}
     >
       <Tab.Screen name="Home" component={MainScreen} />
-      <Tab.Screen name="Recipe" component={RecipeScreen} />
+      <Tab.Screen name="Recipe" component={RecipeScreen} options={{ headerShown: false }}/>
       <Tab.Screen name="Friend" component={FriendScreen} />
       <Tab.Screen name="Mypage" component={MypageScreen} options={{ headerShown: false }} />      
     </Tab.Navigator>
@@ -145,7 +146,18 @@ export default function App() {
         <Stack.Screen 
         name="EditProfile" 
         component={EditProfileScreen} 
-        options={{ headerShown: false }} />
+        options={{ headerShown: false }} 
+        />
+        <Stack.Screen 
+        name="Recipe" 
+        component={RecipeScreen} 
+        options={{ headerShown: false }} 
+        />
+        <Stack.Screen 
+        name="RecipeForm" 
+        component={RecipeForm} 
+        options={{ headerShown: false }} 
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
