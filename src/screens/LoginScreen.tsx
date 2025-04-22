@@ -1,10 +1,16 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Image, StyleSheet } from 'react-native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../App';
 
-export default function LoginScreen() {
+type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
+
+export default function LoginScreen({ navigation }: Props) {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>냉비서 홈 화면</Text>
+      <View>
+        <Image source={require('../../assets/images/로고.png')}></Image>
+      </View>
     </View>
   );
 }
