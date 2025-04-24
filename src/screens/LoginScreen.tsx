@@ -70,7 +70,7 @@ export default function LoginScreen({ navigation }: Props) {
       </View>
       <View>
         <TouchableOpacity
-          onPress={() => navigation.navigate('Login')}
+          //onPress={() => navigation.navigate('Main')}
           style={{
             width: 300,
             height: 50,
@@ -83,7 +83,7 @@ export default function LoginScreen({ navigation }: Props) {
           <Text style={{color: 'white', fontSize: 20}}>로그인</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          //onPress={() => navigation.navigate('SignUp')}
+          onPress={() => navigation.navigate('Terms')}
           style={{
             width: 300,
             height: 50,
