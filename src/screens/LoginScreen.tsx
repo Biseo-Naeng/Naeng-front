@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { View, Image, StyleSheet, TextInput, Text, TouchableOpacity } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../App';
+import { useBackHandler } from '../hook/useMainBackHandler';
 import Checkbox from 'expo-checkbox';
-import { useBackHandler } from '../hook/useBackHandler';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
 
