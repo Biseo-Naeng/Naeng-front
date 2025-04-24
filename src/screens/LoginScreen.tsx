@@ -24,10 +24,15 @@ export default function LoginScreen({ navigation }: Props) {
       </View>
       <View>
         <TextInput
-          placeholder='아이디'
-          placeholderTextColor='#979797'
+          placeholder="아이디"
+          placeholderTextColor="#979797"
           value={id}
-          onChangeText={(text) => setId(text)}
+          onChangeText={(text) => {
+            // 영문, 숫자만 허용하고 20자 이내로 제한
+            const filteredText = text.replace(/[^a-zA-Z0-9]/g, '').slice(0, 20);
+            setId(filteredText);
+          }}
+          autoCapitalize="none"          
           style={{
             width: 300,
             height: 50,
@@ -39,7 +44,12 @@ export default function LoginScreen({ navigation }: Props) {
           placeholder='비밀번호'
           placeholderTextColor='#979797'
           value={password}
-          onChangeText={(text) => setPassword(text)}
+          onChangeText={(text) => {
+            // 영문, 숫자만 허용하고 20자 이내로 제한
+            const filteredText = text.replace(/[^a-zA-Z0-9]/g, '').slice(0, 20);
+            setPassword(filteredText);
+          }}
+          autoCapitalize="none"
           secureTextEntry={true}
           style={{
             width: 300,
