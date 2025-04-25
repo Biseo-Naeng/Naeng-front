@@ -95,6 +95,7 @@ const styles = StyleSheet.create({
     height: 50,
     borderBottomWidth: 1,
     borderBottomColor: '#8D8D8D',
+    textAlignVertical: 'bottom',
   },
   passwordInput: {
     marginTop: 10,
