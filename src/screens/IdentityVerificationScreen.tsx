@@ -191,9 +191,9 @@ export default function IdentityVerificationScreen({ navigation }: Props) {
             <View style={{ flex: 1, justifyContent: 'flex-end' }}>
                 <TouchableOpacity
                     onPress={() => navigation.navigate('IdentityVerification')}
-                    disabled={!verificationNumber || !name || !!emailError}
+                    disabled={!isVerified || !name || !!emailError}
                     // 인증번호 확인 로직 되면 조건 변경해야함
-                    style={{ backgroundColor: (!(verificationNumber.length == 6) || !name || !!emailError) ? '#B0C4DE' : '#1C9BEA', borderRadius: 20, height: 50, marginBottom: 10, marginTop: 5, justifyContent: 'center', alignItems: 'center' }}>
+                    style={{ backgroundColor: (!isVerified || !name || !!emailError) ? '#B0C4DE' : '#1C9BEA', borderRadius: 20, height: 50, marginBottom: 10, marginTop: 5, justifyContent: 'center', alignItems: 'center' }}>
                     <Text style={{ color: '#fff', textAlign: 'center', fontSize: 24 }}>다음</Text>
                 </TouchableOpacity>
             </View>
