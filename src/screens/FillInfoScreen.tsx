@@ -277,7 +277,7 @@ export default function FillInfoScreen({ navigation }: Props) {
       </View> */}
       <View style={{ flex: 1, justifyContent: 'flex-end' }}>
         <TouchableOpacity
-          onPress={() => navigation.navigate('Login')}
+          onPress={() => navigation.navigate('SignUp')}
           style={[styles.signupButton, {backgroundColor: (((id=='') || isIdDuplicated || isPasswordCorrect != '비밀번호가 일치합니다.') ? '#E0E0E0' : '#1C9BEA')}]}
           disabled={(id=='') || isIdDuplicated || isPasswordCorrect != '비밀번호가 일치합니다.'}
         >
