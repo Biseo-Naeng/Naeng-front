@@ -167,6 +167,7 @@ export default function IdentityVerificationScreen({ navigation }: Props) {
                                 if (!isVerified) {
                                     handleVerify(); // 인증번호 확인 로직 실행
                                 }
+                                navigation.navigate('FillInfo') // 다 입력하기 귀찮아서 임시 버튼임
                             }}
                             disabled={verificationNumber.length !== 6 || isVerified}
                         >
@@ -190,7 +191,7 @@ export default function IdentityVerificationScreen({ navigation }: Props) {
             )}
             <View style={{ flex: 1, justifyContent: 'flex-end' }}>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('IdentityVerification')}
+                    onPress={() => navigation.navigate('FillInfo')}
                     disabled={!isVerified || !name || !!emailError}
                     // 인증번호 확인 로직 되면 조건 변경해야함
                     style={{ backgroundColor: (!isVerified || !name || !!emailError) ? '#B0C4DE' : '#1C9BEA', borderRadius: 20, height: 50, marginBottom: 10, marginTop: 5, justifyContent: 'center', alignItems: 'center' }}>
