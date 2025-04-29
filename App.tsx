@@ -7,6 +7,8 @@ import TermsScreen from './src/screens/TermsScreen';
 import IdentityVerificationScreen from './src/screens/IdentityVerificationScreen';
 import FillInfoScreen from './src/screens/FillInfoScreen';
 import SignUpScreen from './src/screens/SignUpScreen';
+import FindIdScreen from './src/screens/FindIdScreen';
+import IdConfirmScreen from './src/screens/IdConfirmScreen';
 
 export type RootStackParamList = {
   Splash: undefined;
@@ -15,6 +17,8 @@ export type RootStackParamList = {
   IdentityVerification: undefined;
   FillInfo: undefined;
   SignUp: undefined;
+  FindId: undefined;
+  IdConfirm: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -22,13 +26,15 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="SignUp" screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName="IdConfirm" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Splash" component={SplashScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Terms" component={TermsScreen} />
         <Stack.Screen name="IdentityVerification" component={IdentityVerificationScreen} />
         <Stack.Screen name="FillInfo" component={FillInfoScreen} />
         <Stack.Screen name="SignUp" component={SignUpScreen} />
+        <Stack.Screen name="FindId" component={FindIdScreen} />
+        <Stack.Screen name="IdConfirm" component={IdConfirmScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
