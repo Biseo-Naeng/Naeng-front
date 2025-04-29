@@ -11,6 +11,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'FillInfo'>;
 export default function FillInfoScreen({ navigation }: Props) {
   const [id, setId] = useState<string>('');
   const [idError, setIdError] = useState<string>('');
+  const [isIdDuplicated, setIsIdDuplicated] = useState<boolean>(false);
   // const [nickname, setNickname] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [verifyPassword, setVerifyPassword] = useState<string>('');
@@ -68,6 +69,16 @@ export default function FillInfoScreen({ navigation }: Props) {
     console.log('id 중복확인 버튼 클릭')
     // 아이디 중복확인 로직
     setIdError('아이디 중복확인 로직 필요'); // 중복확인 되면 문자열, 안되면 ''
+    //setIsIdDuplicated(true); // 중복확인 되면 true, 안되면 false
+
+    // 임시 확인용
+    if(isIdDuplicated){
+      setIsIdDuplicated(false);
+      console.log("중복이 아님")
+    } else {
+      setIsIdDuplicated(true);
+      console.log("중복임")
+    }
   }
 
   const handleVerifyPassword = (password: string, verifyPassword: string) => {
@@ -170,8 +181,8 @@ export default function FillInfoScreen({ navigation }: Props) {
             onPress={() =>
               handleIdDuplicateCheck()} // 중복확인 함수 호출
             disabled={id == ''}
-            style={[styles.duplicateCheckButton, { backgroundColor: !(id == '') ? '#1C9BEA' : '#E0E0E0' }]}>
-            <Text style={styles.duplicateCheckButtonText}>중복확인</Text>
+            style={[styles.duplicateCheckButton, { backgroundColor: (!(id == '') || !isIdDuplicated) ? '#1C9BEA' : '#E0E0E0' }]}>
+            <Text style={styles.duplicateCheckButtonText}>{isIdDuplicated ? "중복 확인" : "확인 완료"}</Text>
           </TouchableOpacity>
         </View>
         {idError && (
@@ -179,10 +190,10 @@ export default function FillInfoScreen({ navigation }: Props) {
             <AntDesign
               name="exclamationcircleo"
               size={12}
-              color="red"
+              color={!isIdDuplicated ? 'green' : 'red'}
               style={{ marginTop: 6, marginRight: 3 }}
             />
-            <Text style={styles.errorText}>{idError}</Text>
+            <Text style={[styles.errorText, {color: !isIdDuplicated ? 'green' : 'red'}]}>{idError}</Text>
           </View>
         )}
         {!idError && <View style={{ height: 21 }} />}
@@ -198,7 +209,7 @@ export default function FillInfoScreen({ navigation }: Props) {
           onChangeText={(text) => {
             setPassword(text);
             handlePasswordValid(text);
-            
+            handleVerifyPassword(text, verifyPassword)
           }}
           autoCapitalize="none"
           secureTextEntry={true}
@@ -266,8 +277,9 @@ export default function FillInfoScreen({ navigation }: Props) {
       </View> */}
       <View style={{ flex: 1, justifyContent: 'flex-end' }}>
         <TouchableOpacity
-          onPress={() => navigation.navigate('Login')}
-          style={styles.signupButton}
+          onPress={() => navigation.navigate('SignUp')}
+          style={[styles.signupButton, {backgroundColor: (((id=='') || isIdDuplicated || isPasswordCorrect != '비밀번호가 일치합니다.') ? '#E0E0E0' : '#1C9BEA')}]}
+          disabled={(id=='') || isIdDuplicated || isPasswordCorrect != '비밀번호가 일치합니다.'}
         >
           <Text style={styles.signupButtonText}>다음</Text>
         </TouchableOpacity>
