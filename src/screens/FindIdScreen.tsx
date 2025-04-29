@@ -5,9 +5,9 @@ import { RootStackParamList } from '../../App';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AntDesign from '@expo/vector-icons/AntDesign';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'IdentityVerification'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'FindId'>;
 
-export default function IdentityVerificationScreen({ navigation }: Props) {
+export default function FindIdScreen({ navigation }: Props) {
     const [name, setName] = useState<string>('');
     const [email, setEmail] = useState<string>('');
     const [verificationNumber, setVerificationNumber] = useState<string>('');
@@ -47,10 +47,10 @@ export default function IdentityVerificationScreen({ navigation }: Props) {
                     style={styles.iconButton}>
                     <Ionicons name="chevron-back-outline" size={32} color="black" />
                 </TouchableOpacity>
-                <Text style={styles.title}>회원가입</Text>
+                <Text style={styles.title}>아이디 찾기</Text>
             </View>
             <View>
-                <Text style={styles.sectionTitle}>2. 본인 인증</Text>
+                <Text style={styles.sectionTitle}>1. 본인 인증</Text>
                 <View style={styles.progressBarContainer}>
                     <View style={styles.progressBar} />
                 </View>
@@ -166,8 +166,7 @@ export default function IdentityVerificationScreen({ navigation }: Props) {
                             onPress={() => {
                                 if (!isVerified) {
                                     handleVerify(); // 인증번호 확인 로직 실행
-                                }
-                                navigation.navigate('FillInfo') // 다 입력하기 귀찮아서 임시 버튼임
+                                }                                
                             }}
                             disabled={verificationNumber.length !== 6 || isVerified}
                         >
@@ -191,7 +190,7 @@ export default function IdentityVerificationScreen({ navigation }: Props) {
             )}
             <View style={{ flex: 1, justifyContent: 'flex-end' }}>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('FillInfo')}
+                    onPress={() => navigation.navigate('IdConfirm')}
                     disabled={!isVerified || !name || !!emailError}
                     // 인증번호 확인 로직 되면 조건 변경해야함
                     style={{ backgroundColor: (!isVerified || !name || !!emailError) ? '#B0C4DE' : '#1C9BEA', borderRadius: 20, height: 50, marginBottom: 10, marginTop: 5, justifyContent: 'center', alignItems: 'center' }}>
@@ -242,7 +241,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     progressBar: {
-        width: '66.66%',
+        width: '50%',
         height: '100%',
         backgroundColor: '#1C9BEA',
     },

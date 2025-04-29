@@ -31,7 +31,7 @@ export default function SignUpScreen({ navigation }: Props) {
           alignItems: 'center',
           justifyContent: 'center',
           }}>
-          <Text style={{color: '#fff', fontSize: 18}}>로그인 페이지로 가기</Text>
+          <Text style={{color: '#fff', fontSize: 20}}>로그인 페이지로 가기</Text>
         </TouchableOpacity>
       </View>
     </View>

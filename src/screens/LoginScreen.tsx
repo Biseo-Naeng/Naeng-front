@@ -16,7 +16,7 @@ export default function LoginScreen({ navigation }: Props) {
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
-        <Image 
+        <Image
           source={require('../../assets/images/로고.png')}
           style={styles.logo}
         />
@@ -52,7 +52,7 @@ export default function LoginScreen({ navigation }: Props) {
             style={styles.checkbox}
             color={isLogin ? '#1C9BEA' : undefined}
           />
-          <Text style={styles.checkboxLabel}>아이디 저장</Text>
+          <Text style={styles.checkboxLabel}>로그인 유지</Text>
         </View>
       </View>
       <View>
@@ -68,7 +68,11 @@ export default function LoginScreen({ navigation }: Props) {
           <Text style={styles.buttonText}>회원가입</Text>
         </TouchableOpacity>
         <View style={styles.linkContainer}>
-          <Text style={styles.linkText}>아이디 찾기</Text>
+          <TouchableOpacity onPress={() =>
+            navigation.navigate('FindId')
+          }>
+            <Text style={styles.linkText}>아이디 찾기</Text>
+          </TouchableOpacity>
           <Text style={styles.linkText}>비밀번호 찾기</Text>
         </View>
       </View>

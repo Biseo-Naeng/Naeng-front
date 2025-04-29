@@ -151,7 +151,7 @@ export default function TermsScreen({ navigation }: Props) {
                     onPress={() => navigation.navigate('IdentityVerification')}
                     disabled={!isAllChecked}
                     style={{ backgroundColor: isAllChecked ? '#1C9BEA' : '#B0C4DE', borderRadius: 20, height: 50, marginBottom: 10, marginTop: 5, justifyContent: 'center', alignItems: 'center' }}>
-                    <Text style={{ color: '#fff', textAlign: 'center', fontSize: 24 }}>다음</Text>
+                    <Text style={{ color: '#fff', textAlign: 'center', fontSize: 20 }}>다음</Text>
                 </TouchableOpacity>
             </View>
         </View>
