@@ -9,6 +9,9 @@ import FillInfoScreen from './src/screens/FillInfoScreen';
 import SignUpScreen from './src/screens/SignUpScreen';
 import FindIdScreen from './src/screens/FindIdScreen';
 import IdConfirmScreen from './src/screens/IdConfirmScreen';
+import FindPasswordScreen from './src/screens/FindPasswordScreen';
+import ChangePasswordScreen from './src/screens/ChangePasswordScreen';
+import PasswordConfirmScreen from './src/screens/PasswordConfirmScreen';
 
 export type RootStackParamList = {
   Splash: undefined;
@@ -19,6 +22,9 @@ export type RootStackParamList = {
   SignUp: undefined;
   FindId: undefined;
   IdConfirm: undefined;
+  FindPassword: undefined;
+  ChangePassword: undefined;
+  PasswordConfirm: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -26,7 +32,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="IdConfirm" screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName="PasswordConfirm" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Splash" component={SplashScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Terms" component={TermsScreen} />
@@ -35,6 +41,9 @@ export default function App() {
         <Stack.Screen name="SignUp" component={SignUpScreen} />
         <Stack.Screen name="FindId" component={FindIdScreen} />
         <Stack.Screen name="IdConfirm" component={IdConfirmScreen} />
+        <Stack.Screen name="FindPassword" component={FindPasswordScreen} />
+        <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} />
+        <Stack.Screen name="PasswordConfirm" component={PasswordConfirmScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
