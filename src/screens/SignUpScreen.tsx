@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, StyleSheet, Image, TouchableOpacity, Text } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../App';
@@ -14,22 +14,24 @@ export default function SignUpScreen({ navigation }: Props) {
       </View>
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Feather name="check-circle" size={54} color="black" />
-        <Text style={{ fontSize: 24, fontWeight: 'bold', marginTop: 20 }}>
+        <Text style={{ fontSize: 20, marginTop: 20 }}>
           회원가입이 완료되었습니다.
         </Text>
-        <Text style={{ fontSize: 16, marginTop: 10 }}>
+        <Text style={{ fontSize: 20, marginTop: 10 }}>
           가입을 환영합니다.
         </Text>
       </View>
-      <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center', marginBottom: 20 }}>
+      <View style={{ flex: 1, width: '100%', justifyContent: 'flex-end', alignItems: 'center' }}>
         <TouchableOpacity 
         onPress={() => navigation.navigate('Login')}
         style={{
           backgroundColor: '#1C9BEA',
-          borderRadius: 20,
-          paddingVertical: 10,
-          width: '80%',}}>
-          <Text>로그인 페이지로 가기</Text>
+          borderRadius: 20, height: 50, marginBottom: 10,
+          width: '100%',
+          alignItems: 'center',
+          justifyContent: 'center',
+          }}>
+          <Text style={{color: '#fff', fontSize: 18}}>로그인 페이지로 가기</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -41,7 +43,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    padding: 20,
   },
   text: {
     fontSize: 24,
