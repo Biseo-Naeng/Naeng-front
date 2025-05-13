@@ -105,7 +105,7 @@ export default function ChangePasswordScreen({ navigation }: Props) {
             )}
             {!isPasswordCorrect && <View style={{ height: 21 }} />}
             <View style={{ flex: 1, width: '100%', justifyContent: 'flex-end', alignItems: 'center' }}>
-                <TouchableOpacity onPress={() => navigation.navigate('Login')} style={{ backgroundColor: '#B0C4DE', width: '100%', borderRadius: 20, height: 50, marginBottom: 10, marginTop: 5, justifyContent: 'center', alignItems: 'center' }}>
+                <TouchableOpacity onPress={() => navigation.navigate('PasswordConfirm')} style={{ backgroundColor: '#B0C4DE', width: '100%', borderRadius: 20, height: 50, marginBottom: 10, marginTop: 5, justifyContent: 'center', alignItems: 'center' }}>
                     <Text style={{ color: 'white', fontSize: 20 }}>
                         비밀번호 찾기
                     </Text>
