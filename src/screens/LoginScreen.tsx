@@ -73,7 +73,11 @@ export default function LoginScreen({ navigation }: Props) {
           }>
             <Text style={styles.linkText}>아이디 찾기</Text>
           </TouchableOpacity>
-          <Text style={styles.linkText}>비밀번호 찾기</Text>
+          <TouchableOpacity onPress={() =>
+            navigation.navigate('FindPassword')
+          }>
+            <Text style={styles.linkText}>비밀번호 찾기</Text>
+          </TouchableOpacity>          
         </View>
       </View>
     </View>
