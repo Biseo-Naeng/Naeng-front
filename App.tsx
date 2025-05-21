@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { BottomTabBar, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import SplashScreen from './src/screens/SplashScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import TermsScreen from './src/screens/TermsScreen';
@@ -13,6 +14,11 @@ import FindPasswordScreen from './src/screens/FindPasswordScreen';
 import ChangePasswordScreen from './src/screens/ChangePasswordScreen';
 import PasswordConfirmScreen from './src/screens/PasswordConfirmScreen';
 import MypageScreen from './src/screens/MypageScreen';
+// 앞으로 추가할 다른 스크린 import
+// import HomeScreen from './src/screens/HomeScreen';
+// import SettingScreen from './src/screens/SettingScreen';
+import Feather from '@expo/vector-icons/Feather';
+import { View } from 'react-native';
 
 export type RootStackParamList = {
   Splash: undefined;
@@ -26,10 +32,46 @@ export type RootStackParamList = {
   FindPassword: undefined;
   ChangePassword: undefined;
   PasswordConfirm: undefined;
+  MainTabs: undefined; // Tab Navigator를 위한 route
+};
+
+export type MainTabParamList = {
   Mypage: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
+const Tab = createBottomTabNavigator<MainTabParamList>();
+
+function MainTabs() {
+  return (
+    <Tab.Navigator
+    tabBar={props => (
+        <View>
+          {/* 하단 탭 아이콘 바로 위에 bar */}
+          <View style={{ height: 4, backgroundColor: '#455BE2', width: '100%' }} />
+          <BottomTabBar {...props} />
+        </View>
+      )}
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ color, size }) => {
+          let iconName: React.ComponentProps<typeof Feather>['name'] = 'user';
+          if (route.name === 'Mypage') iconName = "user";
+          // if (route.name === 'Home') iconName = 'home';
+          // if (route.name === 'Setting') iconName = 'settings';
+          return <Feather name={iconName} size={size} color={color} />;
+        },        
+        tabBarActiveTintColor: '#455BE2',
+        tabBarInactiveTintColor: 'gray',
+        headerShown: false,
+
+      })}
+    >
+      <Tab.Screen name="Mypage" component={MypageScreen} />
+      {/* <Tab.Screen name="Home" component={HomeScreen} options={{ title: '홈' }} /> */}
+      {/* <Tab.Screen name="Setting" component={SettingScreen} options={{ title: '설정' }} /> */}
+    </Tab.Navigator>
+  );
+}
 
 export default function App() {
   return (
@@ -46,7 +88,8 @@ export default function App() {
         <Stack.Screen name="FindPassword" component={FindPasswordScreen} />
         <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} />
         <Stack.Screen name="PasswordConfirm" component={PasswordConfirmScreen} />
-        <Stack.Screen name="Mypage" component={MypageScreen} />
+        {/* 하단탭이 필요한 부분은 MainTabs로 이동 */}
+        <Stack.Screen name="MainTabs" component={MainTabs} />
       </Stack.Navigator>
     </NavigationContainer>
   );
