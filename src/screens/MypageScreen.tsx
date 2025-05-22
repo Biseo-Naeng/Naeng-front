@@ -1,14 +1,17 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { MainTabParamList } from '../../App';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { MainTabParamList, RootStackParamList } from '../../App';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import Feather from '@expo/vector-icons/Feather';
 import CustomToggle from '../components/CustomToggle';
 
-type Props = NativeStackScreenProps<MainTabParamList, 'Mypage'>;
+type Props = BottomTabScreenProps<MainTabParamList, 'Mypage'>;
 
 export default function MypageScreen({ navigation }: Props) {
+    const stackNavigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
     return (
         <View>
@@ -29,7 +32,7 @@ export default function MypageScreen({ navigation }: Props) {
                 </View>
             </View>
             <View style={{ backgroundColor: '#fff', borderRadius: 15, margin: 20, overflow: 'hidden', shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.25, shadowRadius: 3.84, elevation: 5 }}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => stackNavigation.navigate('MyInfo')}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 20, marginLeft: 10 }}>
                         <Text style={{fontSize: 15}}>내 정보</Text>
                         <Feather name="chevron-right" size={28} color="#858585" />

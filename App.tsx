@@ -19,6 +19,7 @@ import MypageScreen from './src/screens/MypageScreen';
 // import SettingScreen from './src/screens/SettingScreen';
 import Feather from '@expo/vector-icons/Feather';
 import { View } from 'react-native';
+import MyInfoScreen from './src/screens/MyInfoScreen';
 
 export type RootStackParamList = {
   Splash: undefined;
@@ -33,10 +34,12 @@ export type RootStackParamList = {
   ChangePassword: undefined;
   PasswordConfirm: undefined;
   MainTabs: undefined; // Tab Navigator를 위한 route
+  MyInfo: undefined;
 };
 
 export type MainTabParamList = {
   Mypage: undefined;
+  
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -45,7 +48,7 @@ const Tab = createBottomTabNavigator<MainTabParamList>();
 function MainTabs() {
   return (
     <Tab.Navigator
-    tabBar={props => (
+      tabBar={props => (
         <View>
           {/* 하단 탭 아이콘 바로 위에 bar */}
           <View style={{ height: 4, backgroundColor: '#455BE2', width: '100%' }} />
@@ -59,11 +62,10 @@ function MainTabs() {
           // if (route.name === 'Home') iconName = 'home';
           // if (route.name === 'Setting') iconName = 'settings';
           return <Feather name={iconName} size={size} color={color} />;
-        },        
+        },
         tabBarActiveTintColor: '#455BE2',
         tabBarInactiveTintColor: 'gray',
         headerShown: false,
-
       })}
     >
       <Tab.Screen name="Mypage" component={MypageScreen} />
@@ -90,6 +92,7 @@ export default function App() {
         <Stack.Screen name="PasswordConfirm" component={PasswordConfirmScreen} />
         {/* 하단탭이 필요한 부분은 MainTabs로 이동 */}
         <Stack.Screen name="MainTabs" component={MainTabs} />
+        <Stack.Screen name="MyInfo" component={MyInfoScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
