@@ -20,6 +20,7 @@ import MypageScreen from './src/screens/MypageScreen';
 import Feather from '@expo/vector-icons/Feather';
 import { View } from 'react-native';
 import MyInfoScreen from './src/screens/MyInfoScreen';
+import SettingScreen from './src/screens/SettingScreen';
 
 export type RootStackParamList = {
   Splash: undefined;
@@ -35,11 +36,11 @@ export type RootStackParamList = {
   PasswordConfirm: undefined;
   MainTabs: undefined; // Tab Navigator를 위한 route
   MyInfo: undefined;
+  Setting: undefined;
 };
 
 export type MainTabParamList = {
-  Mypage: undefined;
-  
+  Mypage: undefined;  
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -93,6 +94,7 @@ export default function App() {
         {/* 하단탭이 필요한 부분은 MainTabs로 이동 */}
         <Stack.Screen name="MainTabs" component={MainTabs} />
         <Stack.Screen name="MyInfo" component={MyInfoScreen} />
+        <Stack.Screen name="Setting" component={SettingScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

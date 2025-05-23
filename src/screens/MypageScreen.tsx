@@ -46,7 +46,7 @@ export default function MypageScreen({ navigation }: Props) {
                     </View>
                 </TouchableOpacity>
                 <View style={{ borderWidth: 0.5, borderColor: '#858585', marginHorizontal: 15, backgroundColor: '#858585' }} />
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => stackNavigation.navigate('Setting')}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 20, marginLeft: 10 }}>
                         <Text style={{fontSize: 15}}>설정</Text>
                         <Feather name="chevron-right" size={28} color="#858585" />
