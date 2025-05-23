@@ -57,6 +57,7 @@ export default function LoginScreen({ navigation }: Props) {
       </View>
       <View>
         <TouchableOpacity
+        onPress={() => navigation.navigate('MainTabs')}
           style={styles.loginButton}
         >
           <Text style={styles.buttonText}>로그인</Text>
