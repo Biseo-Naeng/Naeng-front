@@ -8,7 +8,7 @@ import Checkbox from 'expo-checkbox';
 type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
 
 export default function LoginScreen({ navigation }: Props) {
-  const [id, setId] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [isLogin, setIsLogin] = useState<boolean>(false);
   useBackHandler();
@@ -23,14 +23,15 @@ export default function LoginScreen({ navigation }: Props) {
       </View>
       <View>
         <TextInput
-          placeholder="아이디"
+          placeholder="이메일"
           placeholderTextColor="#979797"
-          value={id}
+          value={email}
           onChangeText={(text) => {
-            const filteredText = text.replace(/[^a-zA-Z0-9]/g, '').slice(0, 20);
-            setId(filteredText);
+            // const filteredText = text.replace(/[^a-zA-Z0-9]/g, '').slice(0, 20);
+            setEmail(text);
           }}
           autoCapitalize="none"
+          keyboardType="email-address"
           style={styles.input}
         />
         <TextInput
@@ -38,8 +39,8 @@ export default function LoginScreen({ navigation }: Props) {
           placeholderTextColor="#979797"
           value={password}
           onChangeText={(text) => {
-            const filteredText = text.replace(/[^a-zA-Z0-9]/g, '').slice(0, 20);
-            setPassword(filteredText);
+            // const filteredText = text.replace(/[^a-zA-Z0-9]/g, '').slice(0, 20);
+            setPassword(text);
           }}
           autoCapitalize="none"
           secureTextEntry={true}
