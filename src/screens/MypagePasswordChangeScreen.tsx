@@ -107,7 +107,7 @@ export default function MypagePasswordChangeScreen({ navigation }: Props) {
         <TouchableOpacity
           style={[
             styles.saveButton,
-            { backgroundColor: isSaveEnabled ? '#1C9BEA' : '#B0C4DE' },
+            { backgroundColor: isSaveEnabled ? '#1C9BEA' : '#A5B2B9' },
           ]}
           disabled={!isSaveEnabled}
           onPress={handleSave}
@@ -130,6 +130,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     padding: 20,
+    position: 'relative',
   },
   header: {
     height: 50,
@@ -179,23 +180,24 @@ const styles = StyleSheet.create({
   },
   saveText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 18,
   },
   toast: {
     position: 'absolute',
-    bottom: 100,
     alignSelf: 'center',
-    backgroundColor: '#6875F5',
-    paddingHorizontal: 24,
-    paddingVertical: 12,
+    top: '50%',
+    backgroundColor: 'rgba(104, 117, 245, 0.9)',
+    paddingHorizontal: 80,
+    paddingVertical: 14,
     borderRadius: 8,
-    elevation: 5,
-    shadowColor: '#000',
-    shadowOpacity: 0.2,
-    shadowOffset: { width: 0, height: 2 },
+    // 그림자가 view안에 겹쳐져서 보여서 지저분해보여서.. 일단 없앰 -> 해결법 찾아보자
+    // elevation: 5,
+    // shadowColor: '#000',
+    // shadowOpacity: 0.2,
+    // shadowOffset: { width: 0, height: 2 },
   },
   toastText: {
     color: '#fff',
-    fontSize: 14,
+    fontSize: 18,
   },
 });

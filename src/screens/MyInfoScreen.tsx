@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, TouchableOpacity, Text, Image, TextInput, Platform, Alert } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text, Image, TextInput, Platform, GestureResponderEvent, Alert} from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../App';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -23,6 +23,7 @@ export default function MyInfoScreen({ navigation }: Props) {
   const [verificationNumber, setVerificationNumber] = useState<string>('');
   const [verificationNumberError, setVerificationNumberError] = useState<string>('');
   const [verificationComplete, setVerificationComplete] = useState<boolean>(false);
+  const [toastVisible, setToastVisible] = useState(false);
 
   // 최초 마운트 시 profileImage 값을 originalProfileImage에 저장
   useEffect(() => {
@@ -98,6 +99,11 @@ export default function MyInfoScreen({ navigation }: Props) {
     const numberRegex = /^[0-9]{6}$/; // 6자리 숫자
     return numberRegex.test(value);
   }
+
+  const handleSave = () => {
+      setToastVisible(true);
+      setTimeout(() => setToastVisible(false), 2000);
+    };
 
   return (
     <View style={styles.container}>
@@ -328,7 +334,7 @@ export default function MyInfoScreen({ navigation }: Props) {
           ]}
           onPress={() => {
             if (isModifyMode) {
-              Alert.alert('저장되었습니다.');
+              handleSave();
               setName(nameInput);
               setEmail(emailInput);
               setOriginalProfileImage(profileImage);
@@ -340,6 +346,11 @@ export default function MyInfoScreen({ navigation }: Props) {
           <Text style={styles.signupButtonText}>{!isModifyMode ? '정보 수정' : '저장'}</Text>
         </TouchableOpacity>
       </View>
+      {toastVisible && (
+              <View style={styles.toast}>
+                <Text style={styles.toastText}>저장되었습니다.</Text>
+              </View>
+            )}
     </View>
   );
 }
@@ -445,5 +456,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     color: '#fff',
     borderRadius: 15,
-  }
+  },
+  toast: {
+    position: 'absolute',
+    alignSelf: 'center',
+    top: '50%',
+    backgroundColor: 'rgba(104, 117, 245, 0.9)',
+    paddingHorizontal: 80,
+    paddingVertical: 14,
+    borderRadius: 8,
+    // 그림자가 view안에 겹쳐져서 보여서 지저분해보여서.. 일단 없앰 -> 해결법 찾아보자
+    // elevation: 5,
+    // shadowColor: '#000',
+    // shadowOpacity: 0.2,
+    // shadowOffset: { width: 0, height: 2 },
+  },
+  toastText: {
+    color: '#fff',
+    fontSize: 18,
+  },
 });

@@ -90,7 +90,6 @@ export default function App() {
         <Stack.Screen name="MainTabs" component={MainTabs} />
         <Stack.Screen name="MyInfo" component={MyInfoScreen} />
         <Stack.Screen name="Setting" component={SettingScreen} />
-        <Stack.Screen name="MypagePasswordConfirm" component={MypagePasswordConfirmScreen} />
         <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} />
         <Stack.Screen name="MypageChangePassword" component={MypagePasswordChangeScreen} />
       </Stack.Navigator>
