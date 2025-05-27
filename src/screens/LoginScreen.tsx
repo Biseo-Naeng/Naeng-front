@@ -1,17 +1,34 @@
 import React, { useState } from 'react';
-import { View, Image, StyleSheet, TextInput, Text, TouchableOpacity } from 'react-native';
+import { View, Image, StyleSheet, TextInput, Text, TouchableOpacity, Alert } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../App';
 import { useBackHandler } from '../hook/useMainBackHandler';
 import Checkbox from 'expo-checkbox';
+import { login } from '../api/auth';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
 
 export default function LoginScreen({ navigation }: Props) {
-  const [id, setId] = useState<string>('');
+  const [username, setusername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [isLogin, setIsLogin] = useState<boolean>(false);
   useBackHandler();
+
+  const handleLogin = async () => {
+    try{
+      const response = await login({username, password});
+      if (response.statusCode === 200 && response.body &&
+        typeof response.body.accessToken === 'string') {
+        Alert.alert('로그인 성공');
+        // 토큰 저장 및 화면 이동 처리 추가 가능
+      } else {
+        Alert.alert('로그인 실패', '이메일 또는 비밀번호를 확인하세요.');
+      }
+    } catch (error) {
+      console.error('로그인 오류:', error);
+      Alert.alert('네트워크 오류', '서버와의 통신에 실패했습니다.');
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -25,10 +42,10 @@ export default function LoginScreen({ navigation }: Props) {
         <TextInput
           placeholder="아이디"
           placeholderTextColor="#979797"
-          value={id}
+          value={username}
           onChangeText={(text) => {
             const filteredText = text.replace(/[^a-zA-Z0-9]/g, '').slice(0, 20);
-            setId(filteredText);
+            setusername(filteredText);
           }}
           autoCapitalize="none"
           style={styles.input}
@@ -57,7 +74,10 @@ export default function LoginScreen({ navigation }: Props) {
       </View>
       <View>
         <TouchableOpacity
-        onPress={() => navigation.navigate('MainTabs')}
+        onPress={() => {
+          navigation.navigate('MainTabs');
+          handleLogin();
+        }}
           style={styles.loginButton}
         >
           <Text style={styles.buttonText}>로그인</Text>
