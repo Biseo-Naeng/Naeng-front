@@ -16,13 +16,11 @@ import PasswordConfirmScreen from './src/screens/PasswordConfirmScreen';
 import MypageScreen from './src/screens/MypageScreen';
 import MyInfoScreen from './src/screens/MyInfoScreen';
 import SettingScreen from './src/screens/SettingScreen';
+import MypagePasswordConfirmScreen from './src/screens/MypagePasswordConfirmScreen';
 import MypagePasswordChangeScreen from './src/screens/MypagePasswordChangeScreen';
-import HomeScreen from './src/screens/HomeScreen';
-import RecipeScreen from './src/screens/RecipeScreen';
-import FriendScreen from './src/screens/FriendScreen';
 
-import { Feather, MaterialCommunityIcons, FontAwesome6 } from '@expo/vector-icons';
-import MyTabBar from './src/components/MyTabBar'
+import Feather from '@expo/vector-icons/Feather';
+import { View } from 'react-native';
 
 export type RootStackParamList = {
   Splash: undefined;
@@ -45,9 +43,6 @@ export type RootStackParamList = {
 
 export type MainTabParamList = {
   Mypage: undefined;
-  Home: undefined;
-  Recipe: undefined;
-  Friend: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -56,28 +51,23 @@ const Tab = createBottomTabNavigator<MainTabParamList>();
 function MainTabs() {
   return (
     <Tab.Navigator
-      tabBar={props => <MyTabBar {...props} />}
+      tabBar={props => (
+        <View>
+          <View style={{ height: 4, backgroundColor: '#455BE2', width: '100%' }} />
+          <BottomTabBar {...props} />
+        </View>
+      )}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
-          if (route.name === 'Home') {
-            return <MaterialCommunityIcons name="fridge-outline" size={size} color={color} />;
-          } else if (route.name === 'Recipe') {
-            return <FontAwesome6 name="utensils" size={size} color={color} />;
-          } else if (route.name === 'Friend') {
-            return <Feather name="users" size={size} color={color} />;
-          } else if (route.name === 'Mypage') {
-            return <Feather name="user" size={size} color={color} />;
-          }
-          return null;
+          let iconName: React.ComponentProps<typeof Feather>['name'] = 'user';
+          if (route.name === 'Mypage') iconName = 'user';
+          return <Feather name={iconName} size={size} color={color} />;
         },
         tabBarActiveTintColor: '#455BE2',
         tabBarInactiveTintColor: 'gray',
         headerShown: false,
       })}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Recipe" component={RecipeScreen} />
-      <Tab.Screen name="Friend" component={FriendScreen} />
       <Tab.Screen name="Mypage" component={MypageScreen} />
     </Tab.Navigator>
   );
