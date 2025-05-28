@@ -32,7 +32,7 @@ function MyTabBar({ state, descriptors, navigation }) {
                         key={route.key}
                         accessibilityState={isFocused ? { selected: true } : {}}
                         onPress={onPress}
-                        style={{ flex: 1 }}
+                        style={{ flex: 1, backgroundColor: "#fff" }}
                     >
                         <View style={{alignItems: 'center', height: 70}}>
                             {/* 활성화된 탭에만 상단 바 렌더링 */}
