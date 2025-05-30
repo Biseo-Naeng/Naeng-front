@@ -209,7 +209,7 @@ export default function HomeScreen({ navigation }: Props) {
           {mode == 'korean' &&
             <Text style={{ fontWeight: 'bold', color: selectedCategory == '냉동' ? fontColors[selectedCategory] : '#000' }}>냉동</Text>}
           {mode == 'icon' &&
-            <FontAwesome5 name="snowflake" size={24} color="black" />}
+            <FontAwesome5 name="snowflake" size={24} color={selectedCategory == '냉동' ? fontColors[selectedCategory] : "#000"} />}
         </TouchableOpacity>
         <Entypo name="minus" size={7} color="black" />
         <TouchableOpacity onPress={() => setSelectedCategory('냉장')}
@@ -217,7 +217,7 @@ export default function HomeScreen({ navigation }: Props) {
           {mode == 'korean' &&
             <Text style={{ fontWeight: 'bold', color: selectedCategory == '냉장' ? fontColors[selectedCategory] : '#000' }}>냉장</Text>}
           {mode == 'icon' &&
-            <FontAwesome6 name="temperature-empty" size={24} color="black" />}
+            <FontAwesome6 name="temperature-empty" size={24} color={selectedCategory == '냉장' ? fontColors[selectedCategory] : "#000"} />}
         </TouchableOpacity>
         <Entypo name="minus" size={7} color="black" />
         <TouchableOpacity onPress={() => setSelectedCategory('실온')}
@@ -225,7 +225,7 @@ export default function HomeScreen({ navigation }: Props) {
           {mode == 'korean' &&
             <Text style={{ fontWeight: 'bold', color: selectedCategory == '실온' ? fontColors[selectedCategory] : '#000' }}>실온</Text>}
           {mode == 'icon' &&
-            <Feather name="archive" size={24} color="black" />}
+            <Feather name="archive" size={24} color={selectedCategory == '실온' ? fontColors[selectedCategory] : "#000"} />}
         </TouchableOpacity>
         <Entypo name="minus" size={7} color="black" />
         <TouchableOpacity onPress={() => setSelectedCategory('조미료')}
@@ -233,7 +233,7 @@ export default function HomeScreen({ navigation }: Props) {
           {mode == 'korean' &&
             <Text style={{ fontWeight: 'bold', color: selectedCategory == '조미료' ? fontColors[selectedCategory] : '#000' }}>조미료</Text>}
           {mode == 'icon' &&
-            <FontAwesome6 name="jar" size={24} color="black" />}
+            <FontAwesome6 name="jar" size={24} color={selectedCategory == '조미료' ? fontColors[selectedCategory] : "#000"} />}
         </TouchableOpacity>
       </View>
     </View>
