@@ -58,18 +58,14 @@ export default function HomeScreen({ navigation }: Props) {
       instruction: '상온 또는 냉장 보관이 가능합니다.',
       expiration_date: '2025-06-20',
     },
-    {
-      id: '6',
-      name: '두부',
-      category: '가공식품',
-      instruction: '개봉 후에는 빨리 드세요.',
-      expiration_date: '2025-06-03',
-    },
+
   ];
 
 
   const [sortOrder, setSortOrder] = useState<string>('ExpirationDate')
-  const [selectedCategory, setSelectedCategory] = useState<'냉동' | '냉장' | '실온' | '조미료'>('냉동');
+  const categories = ['냉동', '냉장', '실온', '조미료'] as const;
+  type Category = typeof categories[number];
+  const [selectedCategory, setSelectedCategory] = useState<Category>('냉동');
 
   const gradientColors = {
     냉동: ['#ACD6FF', '#75B5F3'] as const,
@@ -106,6 +102,19 @@ export default function HomeScreen({ navigation }: Props) {
     조미료: '#A4421A'
   }
 
+  const handleNextCategory = () => {
+    const currentIndex = categories.indexOf(selectedCategory);
+    const nextIndex = (currentIndex + 1) % categories.length;
+    setSelectedCategory(categories[nextIndex]);
+  };
+
+  const handlePrevCategory = () => {
+    const currentIndex = categories.indexOf(selectedCategory);
+    const prevIndex = (currentIndex - 1 + categories.length) % categories.length;
+    setSelectedCategory(categories[prevIndex]);
+  };
+
+
   return (
     <View style={{ flex: 1, paddingBottom: 20 }}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 20, backgroundColor: '#fff' }}>
@@ -113,9 +122,11 @@ export default function HomeScreen({ navigation }: Props) {
         <FontAwesome5 name="bell" size={28} color="black" />
       </View>
       <View style={{ flexDirection: 'row', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => handlePrevCategory()}
+          style={{  }}>
           <FontAwesome name="angle-left" size={32} color="black" />
         </TouchableOpacity>
+
         <View style={{ alignItems: 'center', width: '90%', height: '95%', }}>
           <LinearGradient
             colors={gradientColors[selectedCategory]}
@@ -162,61 +173,67 @@ export default function HomeScreen({ navigation }: Props) {
                 }}
               />
             </View>
-            <FlatList
-              data={gridData}
-              numColumns={3}
-              renderItem={({ item }) => (
-                <View style={{ backgroundColor: '#fff', margin: 7, padding: 10, borderRadius: 15, width: 85, height: 60, alignItems: 'center', justifyContent: 'center' }}>
-                  <Text>{item.name}</Text>
-                  <Text style={{ fontSize: 10 }}>{item.expiration_date}</Text>
-                </View>
-                // sortOrder 값에 따라 텍스트 변경해야함 -> api 나오면 가능
-              )}
-              // keyExtractor는 반드시 문자열을 반환해야함
-              // flatlist의 각 아이템을 고유하게 식별할 key값을 추출
-              keyExtractor={item => item.id}
-              contentContainerStyle={{ alignItems: 'center', marginTop: 20, }}
-            />
-            <TouchableOpacity style={{ backgroundColor: addButtonColors[selectedCategory], alignItems: 'center', borderRadius: 10, margin: 15 }}>
-              <Feather name="plus" size={28} color="#fff" />
-            </TouchableOpacity>
+            <View style={{ flex: 1, alignItems: 'center' }}>
+              <FlatList
+                data={gridData}
+                numColumns={3}
+                renderItem={({ item }) => (
+                  <View style={{ backgroundColor: '#fff', margin: 7, padding: 10, borderRadius: 15, width: 85, height: 60, alignItems: 'center', justifyContent: 'center' }}>
+                    <Text>{item.name}</Text>
+                    <Text style={{ fontSize: 10 }}>{item.expiration_date}</Text>
+                  </View>
+                  // sortOrder 값에 따라 텍스트 변경해야함 -> api 나오면 가능
+                )}
+                // keyExtractor는 반드시 문자열을 반환해야함
+                // flatlist의 각 아이템을 고유하게 식별할 key값을 추출
+                keyExtractor={item => item.id}
+                contentContainerStyle={{ marginTop: 20 }}
+              />
+            </View>
+            <View>
+              <TouchableOpacity style={{ backgroundColor: addButtonColors[selectedCategory], alignItems: 'center', borderRadius: 10, margin: 15 }}>
+                <Feather name="plus" size={28} color="#fff" />
+              </TouchableOpacity>
+            </View>
+
           </LinearGradient>
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => handleNextCategory()}
+          style={{ }}>
           <FontAwesome name="angle-right" size={32} color="black" />
         </TouchableOpacity>
       </View>
       <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: -55 }}>
         <TouchableOpacity onPress={() => setSelectedCategory('냉동')}
           style={{ marginHorizontal: 20 }}>
-            {mode == 'korean' &&
-            <Text style={{ fontWeight: 'bold', color: selectedCategory == '냉동' ? fontColors[selectedCategory] : '#000' }}>냉동</Text>}   
-            {mode == 'icon' && 
-          <FontAwesome5 name="snowflake" size={24} color="black" />}       
+          {mode == 'korean' &&
+            <Text style={{ fontWeight: 'bold', color: selectedCategory == '냉동' ? fontColors[selectedCategory] : '#000' }}>냉동</Text>}
+          {mode == 'icon' &&
+            <FontAwesome5 name="snowflake" size={24} color="black" />}
         </TouchableOpacity>
         <Entypo name="minus" size={7} color="black" />
         <TouchableOpacity onPress={() => setSelectedCategory('냉장')}
           style={{ marginHorizontal: 20 }}>
-            {mode == 'korean' &&
-          <Text style={{ fontWeight: 'bold', color: selectedCategory == '냉장' ? fontColors[selectedCategory] : '#000' }}>냉장</Text>}
-          {mode == 'icon' && 
-          <FontAwesome6 name="temperature-empty" size={24} color="black" />}
+          {mode == 'korean' &&
+            <Text style={{ fontWeight: 'bold', color: selectedCategory == '냉장' ? fontColors[selectedCategory] : '#000' }}>냉장</Text>}
+          {mode == 'icon' &&
+            <FontAwesome6 name="temperature-empty" size={24} color="black" />}
         </TouchableOpacity>
         <Entypo name="minus" size={7} color="black" />
         <TouchableOpacity onPress={() => setSelectedCategory('실온')}
           style={{ marginHorizontal: 20 }}>
-            {mode == 'korean' &&
-          <Text style={{ fontWeight: 'bold', color: selectedCategory == '실온' ? fontColors[selectedCategory] : '#000' }}>실온</Text>}
-          {mode == 'icon' && 
-          <Feather name="archive" size={24} color="black" />}
+          {mode == 'korean' &&
+            <Text style={{ fontWeight: 'bold', color: selectedCategory == '실온' ? fontColors[selectedCategory] : '#000' }}>실온</Text>}
+          {mode == 'icon' &&
+            <Feather name="archive" size={24} color="black" />}
         </TouchableOpacity>
         <Entypo name="minus" size={7} color="black" />
         <TouchableOpacity onPress={() => setSelectedCategory('조미료')}
           style={{ marginHorizontal: 20 }}>
-          {mode == 'korean' && 
-          <Text style={{ fontWeight: 'bold', color: selectedCategory == '조미료' ? fontColors[selectedCategory] : '#000' }}>조미료</Text>}
-          {mode == 'icon' && 
-          <FontAwesome6 name="jar" size={24} color="black" />}
+          {mode == 'korean' &&
+            <Text style={{ fontWeight: 'bold', color: selectedCategory == '조미료' ? fontColors[selectedCategory] : '#000' }}>조미료</Text>}
+          {mode == 'icon' &&
+            <FontAwesome6 name="jar" size={24} color="black" />}
         </TouchableOpacity>
       </View>
     </View>
