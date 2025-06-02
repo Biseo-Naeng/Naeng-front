@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, Image, TouchableOpacity, Modal, TextInput, StyleSheet } from 'react-native';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
@@ -10,6 +10,8 @@ import CustomToggle from '../components/CustomToggle';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AntDesign from '@expo/vector-icons/AntDesign';
 
+import BottomBarContext from '../context/BottomBarContext';
+
 type Props = BottomTabScreenProps<MainTabParamList, 'Mypage'>;
 
 export default function MypageScreen({ navigation }: Props) {
@@ -19,6 +21,10 @@ export default function MypageScreen({ navigation }: Props) {
     // 비밀번호 확인 모달 관련 상태
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string | null>(null);
+
+    const bottomBarContext = useContext(BottomBarContext);
+    if (!bottomBarContext) throw new Error('BottomBarProvider로 감싸져야 합니다!');
+    const { mode, setMode } = bottomBarContext;
 
     const handlePasswordConfirm = () => {
         const isMatch = password === 'qwer1234'; // 실제 환경에서는 서버 검증 필요
@@ -79,7 +85,7 @@ export default function MypageScreen({ navigation }: Props) {
                 <CustomToggle
                     leftText="한글"
                     rightText="아이콘"
-                    onToggle={(isLeft: any) => console.log(isLeft ? '한글' : '아이콘')}
+                    onToggle={(isLeft: boolean) => setMode(isLeft ? 'korean' : 'icon')}
                 />
             </View>
             <Modal
@@ -118,7 +124,8 @@ export default function MypageScreen({ navigation }: Props) {
                         <TouchableOpacity
                             style={[styles.button, { backgroundColor: password ? '#1C9BEA' : '#A5B2B9' }]}
                             disabled={!password}
-                            onPress={()=> {handlePasswordConfirm;
+                            onPress={() => {
+                                handlePasswordConfirm;
                                 setModalVisible(false);
                                 setPassword('');
                                 setError(null);

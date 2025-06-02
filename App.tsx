@@ -25,6 +25,8 @@ import IngredientDetailScreen from './src/screens/IngredientDetailScreen';
 import { Feather, MaterialCommunityIcons, FontAwesome6 } from '@expo/vector-icons';
 import MyTabBar from './src/components/MyTabBar';
 
+import { BottomBarProvider } from './src/provider/BottomBarProvider';
+
 export type RootStackParamList = {
   Splash: undefined;
   Login: undefined;
@@ -88,7 +90,7 @@ function MainTabs() {
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="IngredientDetail" screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName="Splash" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Splash" component={SplashScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Terms" component={TermsScreen} />
