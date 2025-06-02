@@ -89,25 +89,27 @@ function MainTabs() {
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Splash" screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Splash" component={SplashScreen} />
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Terms" component={TermsScreen} />
-        <Stack.Screen name="IdentityVerification" component={IdentityVerificationScreen} />
-        <Stack.Screen name="FillInfo" component={FillInfoScreen} />
-        <Stack.Screen name="SignUp" component={SignUpScreen} />
-        <Stack.Screen name="FindId" component={FindIdScreen} />
-        <Stack.Screen name="IdConfirm" component={IdConfirmScreen} />
-        <Stack.Screen name="FindPassword" component={FindPasswordScreen} />
-        <Stack.Screen name="PasswordConfirm" component={PasswordConfirmScreen} />
-        <Stack.Screen name="MainTabs" component={MainTabs} />
-        <Stack.Screen name="MyInfo" component={MyInfoScreen} />
-        <Stack.Screen name="Setting" component={SettingScreen} />
-        <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} />
-        <Stack.Screen name="MypageChangePassword" component={MypagePasswordChangeScreen} />
-        <Stack.Screen name="IngredientDetail" component={IngredientDetailScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <BottomBarProvider>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Splash" screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Splash" component={SplashScreen} />
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Terms" component={TermsScreen} />
+          <Stack.Screen name="IdentityVerification" component={IdentityVerificationScreen} />
+          <Stack.Screen name="FillInfo" component={FillInfoScreen} />
+          <Stack.Screen name="SignUp" component={SignUpScreen} />
+          <Stack.Screen name="FindId" component={FindIdScreen} />
+          <Stack.Screen name="IdConfirm" component={IdConfirmScreen} />
+          <Stack.Screen name="FindPassword" component={FindPasswordScreen} />
+          <Stack.Screen name="PasswordConfirm" component={PasswordConfirmScreen} />
+          <Stack.Screen name="MainTabs" component={MainTabs} />
+          <Stack.Screen name="MyInfo" component={MyInfoScreen} />
+          <Stack.Screen name="Setting" component={SettingScreen} />
+          <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} />
+          <Stack.Screen name="MypageChangePassword" component={MypagePasswordChangeScreen} />
+          <Stack.Screen name="IngredientDetail" component={IngredientDetailScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </BottomBarProvider>
   );
 }
