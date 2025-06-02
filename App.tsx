@@ -20,9 +20,10 @@ import MypagePasswordChangeScreen from './src/screens/MypagePasswordChangeScreen
 import HomeScreen from './src/screens/HomeScreen';
 import RecipeScreen from './src/screens/RecipeScreen';
 import FriendScreen from './src/screens/FriendScreen';
+import IngredientDetailScreen from './src/screens/IngredientDetailScreen';
 
 import { Feather, MaterialCommunityIcons, FontAwesome6 } from '@expo/vector-icons';
-import MyTabBar from './src/components/MyTabBar'
+import MyTabBar from './src/components/MyTabBar';
 
 export type RootStackParamList = {
   Splash: undefined;
@@ -41,6 +42,7 @@ export type RootStackParamList = {
   Setting: undefined;
   MypagePasswordConfirm: undefined;
   MypageChangePassword: undefined;
+  IngredientDetail: undefined;
 };
 
 export type MainTabParamList = {
@@ -86,7 +88,7 @@ function MainTabs() {
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Splash" screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName="IngredientDetail" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Splash" component={SplashScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Terms" component={TermsScreen} />
@@ -102,6 +104,7 @@ export default function App() {
         <Stack.Screen name="Setting" component={SettingScreen} />
         <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} />
         <Stack.Screen name="MypageChangePassword" component={MypagePasswordChangeScreen} />
+        <Stack.Screen name="IngredientDetail" component={IngredientDetailScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
