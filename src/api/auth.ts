@@ -1,6 +1,6 @@
 // api/auth.ts
 //import axios from 'axios';
-import { LoginRequest, LoginResponse } from "../interface/apidata.interface";
+import { LoginRequest, LoginResponse } from "../interface/auth"
 
 export const login = async (data: LoginRequest): Promise<LoginResponse> => {
     const response = await fetch('http://10.0.2.2:8080/auth/login', {
